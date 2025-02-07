@@ -76,6 +76,6 @@
 </body>
 <footer class="footer" style="background-color:#1abc9c; color: #FFF; padding: 15px; text-align: center; position: absolute; bottom: 0; width: 100%;">
     <!-- Add content for your footer here -->
-    Group "EPICS130". All rights reserved. 2025
+    Group "EPICS130". All rights reserved. &copy 2025
 </footer>
 </html>
