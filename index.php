@@ -3,79 +3,179 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAKT</title>
-    <!-- Include Bootstrap CSS CDN -->
+    <title>RAKT - Blood Bank Management</title>
+    
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- fontawesome -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Favicon -->
     <link rel="shortcut icon" href="images/blood-drop.svg" type="image/x-icon">
+    
     <style>
-    html {
-        min-height: 100%;
-        position: relative;
-    }
-    /* Add hover effect for links */
-    .navbar-nav .nav-item a {
-        position: relative;
-        color: #777;
-        margin-right:10px;
-        text-decoration: none;
-        overflow: hidden;
-    }
+        /* General Layout */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5dc;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .navbar-nav  li a:hover {
-        color: #1abc9c !important;
-    }
+        /* Navbar */
+        .navbar {
+            background-color: #d9534f;
+            padding: 12px 0;
+            width: 100%;
+        }
+
+        .navbar-brand {
+            font-size: 22px;
+            letter-spacing: 1.5px;
+            font-weight: bold;
+        }
+
+        .navbar-nav .nav-item .nav-link {
+            font-size: 20px;
+            color: #fff;
+        }
+
+        /* Main Content */
+        .hero-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 15px;
+            opacity: 0; /* Initially hidden */
+            transform: translateY(30px);
+        }
+
+        .hero-section.fade-in-active {
+            animation: fadeIn 1.2s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero-section p {
+            font-size: 1.5rem;
+            margin-top: 15px;
+            color: #444;
+        }
+
+        .hero-section .btn {
+            font-size: 1rem;
+            padding: 10px 30px;
+        }
+
+        .hero-section img {
+            max-width: 70%;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #d9534f;
+            color: #fff;
+            padding: 12px;
+            font-size: 20px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2rem;
+            }
+
+            .hero-section p {
+                font-size: 1rem;
+            }
+
+            .hero-section img {
+                max-width: 95%;
+            }
+        }
     </style>
 </head>
-<body style="background-color: #f5f5dc;">
-    <!-- Bootstrap navigation bar with responsive button -->
-    <div class="container" style="margin-bottom: 50px;">
-        <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#f8f88f;">
-        <a class="navbar-brand" href="index.php" style="color: #777;font-size:22px;letter-spacing:2px;">RAKT</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="patient/register.php">REGISTER</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="patient/login.php">LOGIN</a>
-                </li>
-            </ul>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top w-100">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.php">RAKT</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="patient/register.php"><i class="fa fa-user-plus"></i> Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="patient/login.php"><i class="fa fa-sign-in"></i> Login</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-</div>
 
-    <div class='container text-center' style="color:#000;padding-top: 100px;padding-bottom:50px;">
-        <h1 class="display-6">Blood Bank Management System</h1>
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <p class="lead mt-3">
-                    This system is designed to efficiently manage blood donations, donors, and recipients, ensuring the availability of safe and life-saving blood for those in need.
+    <!-- Main Section -->
+    <div class="container-fluid hero-section fade-in">
+        <h1>Blood Bank Management System</h1>
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-6 text-center">
+                <p class="lead">
+                    This system ensures efficient blood donation management, connecting donors and recipients for life-saving blood availability.
                 </p>
-                <p class="lead mt-3 mb-5">
-                    Join us in the mission to save lives. Register as a donor or recipient and help make a difference!
+                <p class="lead">
+                    Be a hero—join us today and help save lives!
                 </p>
+                <a href="patient/register.php" class="btn btn-danger btn-lg mt-3">
+                    <i class="fa fa-heart"></i> Become a Donor
+                </a>
             </div>
-            <div class="col-lg-6">
-                <img id="animated-image" src="images/home.svg" alt="" class="img-fluid d-none d-lg-block">
+            <div class="col-lg-6 text-center">
+                <img src="images/home.svg" alt="Blood Donation" class="img-fluid">
             </div>
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        Group "EPICS130". All rights reserved. &copy; 2025
+    </footer>
 
-
-    <!-- Include Bootstrap JS and jQuery CDN -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <!-- Bootstrap JS & jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript for Fade-in Effect -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelector(".hero-section").classList.add("fade-in-active");
+        });
+    </script>
+
 </body>
-<footer class="footer" style="background-color:#1abc9c; color: #FFF; padding: 15px; text-align: center; position: absolute; bottom: 0; width: 100%;">
-    <!-- Add content for your footer here -->
-    Group "EPICS130". All rights reserved. &copy 2025
-</footer>
 </html>
