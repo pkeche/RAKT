@@ -63,7 +63,3 @@ function sendEmail(string $email): void {
     }
 }
 
-// Example usage
-$patient_id = 1; // Change this to the actual patient ID
-notifyDonors($patient_id, $conn);
-?>
