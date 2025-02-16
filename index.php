@@ -23,7 +23,7 @@
             display: flex;
             flex-direction: column;
         }
-
+        
         /* Navbar */
         .navbar {
             background-color: #d9534f;
