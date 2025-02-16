@@ -4,6 +4,7 @@
     declare(strict_types= 1);
     require_once("../includes/session.inc.php");
     require_once("../includes/dbh.inc.php");
+    require_once("../services/notify/main.php");
     
     if($_SERVER["REQUEST_METHOD"]==="POST")
     {
