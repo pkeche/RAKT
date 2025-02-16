@@ -8,7 +8,7 @@ use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-
+$emails = [];
 function getMailIds(string $patient_id, $conn): array {
     $sql = "SELECT d.email
             FROM donor d
@@ -16,21 +16,11 @@ function getMailIds(string $patient_id, $conn): array {
             WHERE p.id = ?";
 
     $stmt = $conn->prepare($sql);
-    if (!$stmt) {
-        error_log("Failed to prepare statement: " . $conn->error);
-        return [];
-    }
-
     $stmt->bind_param("i", $patient_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if (!$result) {
-        error_log("Failed to execute query: " . $stmt->error);
-        return [];
-    }
-
-    $emails = [];
+    
     while ($row = $result->fetch_assoc()) {
         $emails[] = $row['email'];
     }
@@ -60,26 +50,8 @@ function getMailIds(string $patient_id, $conn): array {
             $mail->send();
             echo "Email sent to $email\n";
         } catch (Exception $e) {
-            error_log("Email could not be sent to $email. Error: {$mail->ErrorInfo}");
             echo "Email could not be sent to $email. Error: {$mail->ErrorInfo}\n";
         }
     }
 }
-
-// Example usage
-$patient_id = 1; // Replace with actual patient ID
-$conn = new mysqli('localhost', 'username', 'password', 'database'); // Replace with actual DB credentials
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$emails = getMailIds($patient_id, $conn);
-if (empty($emails)) {
-    echo "No emails found for patient ID $patient_id\n";
-} else {
-    sendMailsToDonors($emails);
-}
-
-$conn->close();
 ?>
