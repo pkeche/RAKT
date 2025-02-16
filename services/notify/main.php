@@ -8,24 +8,32 @@ use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
-$emails = [];
-function getMailIds(string $patient_id, $conn): array {
+
+function getMailIds(string $patient_id, PDO $conn): void {
     $sql = "SELECT d.email
             FROM donor d
             JOIN patient p ON d.pincode = p.pincode AND d.blood = p.blood
-            WHERE p.id = ?";
+            WHERE p.id = :patient_id";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $patient_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    
-    while ($row = $result->fetch_assoc()) {
-        $emails[] = $row['email'];
+    if (!$stmt) {
+        error_log("Failed to prepare statement: " . $conn->errorInfo()[2]);
+        return;
     }
 
-    $stmt->close();
+    $stmt->bindParam(':patient_id', $patient_id, PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!$result) {
+        error_log("Failed to execute query: " . $stmt->errorInfo()[2]);
+        return;
+    }
+
+    $emails = [];
+    foreach ($result as $row) {
+        $emails[] = $row['email'];
+    }
 
     foreach ($emails as $email) {
         $mail = new PHPMailer(true);
@@ -44,12 +52,13 @@ function getMailIds(string $patient_id, $conn): array {
             $mail->addAddress($email);
 
             // Email content
-            $mail->Subject = 'Test Email';
-            $mail->Body    = 'This is a test email';
+            $mail->Subject = 'Blood Request Notification';
+            $mail->Body    = 'Blood Request Notification';
 
             $mail->send();
             echo "Email sent to $email\n";
         } catch (Exception $e) {
+            error_log("Email could not be sent to $email. Error: {$mail->ErrorInfo}");
             echo "Email could not be sent to $email. Error: {$mail->ErrorInfo}\n";
         }
     }
