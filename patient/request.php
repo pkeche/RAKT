@@ -58,12 +58,12 @@
             $stmt->bindParam(":unit", $unit);
             $stmt->execute();
             getMailIds($patient_id, $pdo);
-            header("Location:dashboard.php?requests_history=1");
+            
 
 
             $pdo = null;
             $stmt = null;
-
+            header("Location:dashboard.php?requests_history=1");
             die();
 
 
