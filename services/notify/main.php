@@ -9,7 +9,7 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-function notifyDonors(int $patient_id, PDO $conn): void {
+function getMailIds(int $patient_id, PDO $conn): void {
     $sql = "SELECT d.email 
             FROM donor d
             JOIN patient p ON d.pincode = p.pincode AND d.blood = p.blood
