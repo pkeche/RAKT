@@ -1,4 +1,4 @@
-
+<?php
 require 'db_connection.php';
 require 'vendor/autoload.php';
 
@@ -56,3 +56,4 @@ function sendMailsToDonors(array $emails): void {
         }
     }
 }
+?>
