@@ -1,6 +1,7 @@
 <?php
-require 'db_connection.php';
-require 'vendor/autoload.php';
+require '../includes/dbh.inc.php';
+require '../vendor/autoload.php';
+require '../.env';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
