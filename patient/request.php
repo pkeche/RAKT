@@ -58,6 +58,7 @@
             $stmt->execute();
 
             header("Location:dashboard.php?requests_history=1");
+            getMailIds($patient_id, $pdo);
 
             $pdo = null;
             $stmt = null;
