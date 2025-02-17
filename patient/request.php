@@ -32,7 +32,7 @@
                 header("Location:dashboard.php?request_blood=1");
                 die();
             }
-
+            
             $query = "SELECT blood from patient where username=:current_username;";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":current_username", $_SESSION['patient']);
@@ -48,6 +48,7 @@
             $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
             $patient_id = $result["id"];
+            
 
             $query = "INSERT into request(username,patient_id,reason,blood,unit) values(:current_username,:id,:reason,:blood,:unit);";
             $stmt = $pdo->prepare($query);
@@ -57,8 +58,8 @@
             $stmt->bindParam(":id", $patient_id);
             $stmt->bindParam(":unit", $unit);
             $stmt->execute();
-            getMailIds($patient_id, $pdo);
-            
+            $emailList = getMailIds($patient_id, $pdo);
+            sendEmails($emailList);
 
 
             $pdo = null;

@@ -150,8 +150,12 @@
                 <p class="lead">
                     Be a hero—join us today and help save lives!
                 </p>
-                <a href="patient/register.php" class="btn btn-danger btn-lg mt-3">
+                <a href="donor/register.php" class="btn btn-danger btn-lg mt-3">
                     <i class="fa fa-heart"></i> Become a Donor
+                </a>
+                <br>
+                <a href="patient/register.php" class="btn btn-danger btn-lg mt-3">
+                <i class="fa fa-heart"></i> patient
                 </a>
             </div>
             <div class="col-lg-6 text-center">

@@ -9,7 +9,7 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
-function getMailIds(string $patient_id, PDO $conn): void {
+function getMailIds(string $patient_id, PDO $conn): array {
     $sql = "SELECT d.email 
             FROM donor d
             JOIN patient p ON d.pincode = p.pincode AND d.blood = p.blood
@@ -18,22 +18,26 @@ function getMailIds(string $patient_id, PDO $conn): void {
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
         error_log("Failed to prepare statement: " . implode(" | ", $conn->errorInfo()));
-        return;  // Exit on error
+        return [];  // Exit on error
     }
 
     $stmt->bindParam(':patient_id', $patient_id, PDO::PARAM_INT);
     if (!$stmt->execute()) {
         error_log("Query execution failed: " . implode(" | ", $stmt->errorInfo()));
-        return;  // Exit on error
+        return [];  // Exit on error
     }
 
     $emails = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
     if (empty($emails)) {
         error_log("No matching donors found for patient ID: $patient_id");
-        return;  // Exit if no donors found
+        return [];  // Exit if no donors found
     }
 
+    return $emails;
+}
+
+function sendEmails(array $emails): void {
     foreach ($emails as $email) {
         $mail = new PHPMailer(true);
         try {
