@@ -3,7 +3,6 @@
     declare(strict_types= 1);
     require_once("../includes/dbh.inc.php");
     require_once("../includes/session.inc.php");
-    require_once("../index.php");
 
     if($_SERVER['REQUEST_METHOD']=="POST")
     {
@@ -64,7 +63,6 @@
                 $stmt = $pdo->prepare($query);
                 $stmt->bindParam(":id", $patient_id);
                 $stmt->execute();
-            
                 header('Location: ../index.php?deleted=1');
                 exit();
             }
