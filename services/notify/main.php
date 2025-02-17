@@ -18,20 +18,20 @@ function getMailIds(string $patient_id, PDO $conn): void {
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
         error_log("Failed to prepare statement: " . implode(" | ", $conn->errorInfo()));
-        
+        return;  // Exit on error
     }
 
     $stmt->bindParam(':patient_id', $patient_id, PDO::PARAM_INT);
     if (!$stmt->execute()) {
         error_log("Query execution failed: " . implode(" | ", $stmt->errorInfo()));
-        
+        return;  // Exit on error
     }
 
     $emails = $stmt->fetchAll(PDO::FETCH_COLUMN);
 
     if (empty($emails)) {
         error_log("No matching donors found for patient ID: $patient_id");
-        
+        return;  // Exit if no donors found
     }
 
     foreach ($emails as $email) {
@@ -58,7 +58,7 @@ function getMailIds(string $patient_id, PDO $conn): void {
             echo "Email sent to $email\n";
         } catch (Exception $e) {
             error_log("Email could not be sent to $email. Error: " . $mail->ErrorInfo);
+            error_log("Exception: " . $e->getMessage());
         }
     }
 }
-?>
