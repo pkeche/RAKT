@@ -62,7 +62,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(50px);
             }
             to {
                 opacity: 1;
@@ -145,17 +145,17 @@
         <div class="row justify-content-center mt-4">
             <div class="col-lg-6 text-center">
                 <p class="lead">
-                    This system ensures efficient blood donation management, connecting donors and recipients for life-saving blood availability.
+                    Our system ensures efficient blood donation management, connecting donors and recipients for life-saving blood availability.
                 </p>
                 <p class="lead">
                     Be a hero—join us today and help save lives!
                 </p>
                 <a href="donor/register.php" class="btn btn-danger btn-lg mt-3">
-                    <i class="fa fa-heart"></i> Become a Donor
+                    <i class="fa fa-heart"></i>  Save a Live
                 </a>
                 <br>
                 <a href="patient/register.php" class="btn btn-danger btn-lg mt-3">
-                <i class="fa fa-heart"></i> patient
+                <i class="fa fa-heart"></i> Request Blood
                 </a>
             </div>
             <div class="col-lg-6 text-center">

@@ -37,7 +37,7 @@ function getMailIds(string $patient_id, PDO $conn): array {
     return $emails;
 }
 
-function sendEmails(array $emails): void {
+function sendEmails(array $emails,string $role): void {
     foreach ($emails as $email) {
         $mail = new PHPMailer(true);
         try {
@@ -55,11 +55,15 @@ function sendEmails(array $emails): void {
             $mail->addAddress($email);
 
             // Email content
-            $mail->Subject = 'Urgent Blood Request';
-            $mail->Body    = 'A patient in your area needs a blood donation. Please contact the nearest blood bank.';
-
-            $mail->send();
-            echo "Email sent to $email\n";
+            if ($role=="Patient"){
+                $mail->Subject = 'Urgent Blood Request';
+                $mail->Body    = 'A patient in your area needs a blood donation. Please contact the nearest blood bank.';
+                $mail->send();}
+            if ($role=="Donor"){
+                $mail->Subject = 'Your Blood Donation Request';
+                $mail->Body    = 'Your Blood Donation Request has been accepted. Please contact the nearest blood bank.';
+                $mail->send();}
+            
         } catch (Exception $e) {
             error_log("Email could not be sent to $email. Error: " . $mail->ErrorInfo);
             error_log("Exception: " . $e->getMessage());
