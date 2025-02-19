@@ -54,14 +54,21 @@
             max-width: 400px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .active , .active:hover {
-            background-color: #1abc9c; /* Highlight color for the active button */
+        .active {
+            background-color: #d9534f; /* Highlight color for the active button */
             color:#fff;
-        }
-        .btn {
-            border: 1px #1ac9bc solid;
+            border: 1px #d9534f;
             margin: 5px;
         }
+        .active:hover {
+            background-color: #dc3545; /* Highlight color for the active button */
+            color:#fff;
+            border: 1px #dc3545;
+            margin: 5px;
+        }
+        .inactive {
+            border: 1px #1ac9bc solid;
+            margin: 5px;}
         .custom-text-center {
             padding: 10px;
             max-width: 400px;
@@ -80,16 +87,16 @@
 </head>
 <body style="background-color: #f5f5dc;">
     <div class="container" style="margin-top:80px;">
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#f8f88f;">
-        <a class="navbar-brand" href="../index.php" style="color: #777;font-size:22px;letter-spacing:2px;">RAKT</a>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#d9534f">
+        <a class="navbar-brand" href="../index.php" style="color: #fff;font-size:22px;letter-spacing:2px;">RAKT</a>
     </nav>
         <?php 
             check_errors();
         ?>
         <div class="text-center custom-text-center">
-            <a class="btn" href="../patient/login.php">As Patient</a>
+            <a class="btn inactive" href="../patient/login.php">As Patient</a>
             <a class="btn active" href="../donor/login.php">As Donor</a>
-            <a class="btn" href="../admin/login.php">As Admin</a>
+            <a class="btn inactive" href="../admin/login.php">As Admin</a>
         </div>
         <!-- Patient Register Form -->
         <div style="display:block;">

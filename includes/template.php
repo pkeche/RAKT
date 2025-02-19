@@ -47,7 +47,7 @@
         </style>
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <div class="form-container" style="border: 2px solid #1abc9c;border-radius:10px;">
+                <div class="form-container" style="border: 2px solid #d9534f;border-radius:10px;">
                     <div class="d-flex justify-content-between">
                         <h2 class="text-center">' . $name . '</h2>
                     </div>
@@ -122,7 +122,7 @@
         </style>
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <div class="form-container" style="border: 2px solid #1abc9c;border-radius:10px;">
+                <div class="form-container" style="border: 2px solid #DC3545;border-radius:10px;">
                     <div class="d-flex justify-content-between">
                         <h2 class="text-center">' . $name . '</h2>
                     </div>
@@ -239,7 +239,7 @@
         <div class="container mb-5">
             <div class="row">
                 <div class="col-md-6 offset-md-3">
-                    <div class="form-container p-3" style="border: 2px solid #1abc9c; border-radius: 10px;">
+                    <div class="form-container p-3" style="border: 2px solid #d9534f; border-radius: 10px;">
                         <h2 class="text-center">Profile</h2>
                         <form action="update_delete.php" method="post">
         
@@ -336,7 +336,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 offset-md-4">
-                    <div class="form-container p-3" style="border: 2px solid #1abc9c;border-radius:10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                    <div class="form-container p-3" style="border: 2px solid #d9534f;border-radius:10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                     <h2 class="text-center">'.$name.'</h2>
                     <form action='.$path.' method="post">
                         <div class="form-group">
@@ -363,7 +363,7 @@
         '
         <style>
         .transparent-bg {
-            background: #1abc9c;
+            background: #d9534f;
             transition: background 0.3s, transform 0.3s;
             border-radius:16px;
             color:#fff;
@@ -394,7 +394,7 @@
                 .transparent-bg {
                     background: transparent;
                     transition: background 0.3s, transform 0.3s;
-                    border: 2px solid #1abc9c;
+                    border: 2px solid #d9534f;
                     border-radius: 16px;
                 }
 

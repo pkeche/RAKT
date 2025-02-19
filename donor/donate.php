@@ -200,8 +200,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 </head>
 <body style="background-color: #f5f5dc;">
     <div class="container" style="margin-top:80px;">
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#f8f88f;">
-        <a class="navbar-brand" href="../index.php" style="color: #777;font-size:22px;letter-spacing:2px;">RAKT</a>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#d9534f;">
+        <a class="navbar-brand" href="../index.php" style="color: #fff;font-size:22px;letter-spacing:2px;">RAKT</a>
     </nav>
         <?php 
             check_errors();

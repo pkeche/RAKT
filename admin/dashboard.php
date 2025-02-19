@@ -59,7 +59,7 @@
 
         .navbar-nav .nav-item a , .dropdown a {
             position: relative;
-            color: #777;
+            color: #fff;
             text-transform: uppercase;
             margin-right: 10px;
             text-decoration: none;
@@ -92,7 +92,7 @@
 <body style="background-color: #f5f5dc;">
     <!-- Bootstrap navigation bar with responsive button -->
     <div class="container" style="margin-bottom: 100px;">
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#f8f88f;">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#d9534f;">
     <a class="navbar-brand" href="../index.php" style="color: #777;font-size:22px;letter-spacing:2px;">RAKT</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
