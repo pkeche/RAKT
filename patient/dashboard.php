@@ -84,14 +84,42 @@
             text-decoration: none;
             overflow: hidden;
         }
+        .dropdown-menu {
+            background-color: #d9534f;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dropdown-menu a {
+            color: #fff !important;
+            transition: background 0.3s ease-in-out;
+        }
 
-        .dropdown-menu , .dropdown-menu a:hover {
-            background-color: #d9534f; /* Change the color to match your navbar background */
+        .dropdown-menu a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .navbar-nav  li a:hover {
-            color: #1abc9c !important;
+            color: #1abc9c !important;}
+
+        .btn {
+            font-size: 1.0rem;
+            padding: 10px 30px;
+            border-radius: 30px;
+            transition: all 0.3s ease-in-out;
+            background-color: #d9534f;
+            color: #fff;
+            font-weight: 600;
+            border: none;
         }
+
+        .btn:hover {
+            background-color: #c8322d;
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }            
+        
     </style>
 </head>
 <body style="background-color: #f5f5dc;">
