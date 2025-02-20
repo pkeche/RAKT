@@ -4,11 +4,13 @@
     require_once("../includes/dbh.inc.php");
     require_once("../includes/session.inc.php");
 
+
     if($_SERVER['REQUEST_METHOD']=="POST")
     {
         $name = $_POST["name"];
         $email = $_POST["email"];
         $username = $_POST['username'];
+        $pincode = $_POST['pincode'];
 
         try 
         {
@@ -23,11 +25,11 @@
 
             $errors = [];
 
-            if(empty($username) || empty($email) || empty($name))
+            if(empty($username) || empty($email) || empty($name)|| empty($pincode))
             {
                 $errors["admin_error_profile"] = "Fill all fields!";
             }
-            if(username_exists($pdo,$username,$admin_id))
+            if(username_exists($pdo,$username,$admin_id,))
             {
                 $errors["user_exists"] = "user already exists!";
             }
@@ -45,11 +47,12 @@
 
             if(isset($_POST['update']))
             {
-                $query = "UPDATE admin set username=:username,email=:email,name=:name where id=:id;";
+                $query = "UPDATE admin set username=:username,email=:email,pincode=:pincode,name=:name where id=:id;";
                 $stmt = $pdo->prepare($query);
                 $stmt->bindParam(":name", $name);
                 $stmt->bindParam(":email", $email);
                 $stmt->bindParam(":username", $username);
+                $stmt->bindParam(":pincode", $pincode);
                 $stmt->bindParam(":id", $admin_id);
                 $stmt->execute();
     
@@ -60,12 +63,9 @@
             }
             else if(isset($_POST['delete']))
             {
-                $query = "DELETE from admin where id=:id;";
-                $stmt = $pdo->prepare($query);
-                $stmt->bindParam(":id",$admin_id);
-                $stmt->execute();
+                echo "Cannot Delete Admin! If you wish to make changes contact the super admin! OR contact the EPICS group";
                 
-                header('Location:dashboard.php?logout=1');
+                header('Location:dashboard.php?profile=1');
             }
 
             $pdo = null;

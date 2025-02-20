@@ -1,4 +1,7 @@
+
 <?php
+    require_once("../includes/session.inc.php");
+    include("../includes/dbh.inc.php");
     function login_template(string $name)
     {
         echo
@@ -190,11 +193,7 @@
     function profile_template(array $row, string $role)
     {
         // Database connection
-        $conn = new mysqli("localhost", "root", "", "RAKT");
-    
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
+        global $pdo; 
     
         // Get pincode from the row
         $pincode = $row['pincode'];
@@ -203,21 +202,19 @@
         $state = "";
     
         // Fetch city and state using pincode
-        $sql = "SELECT location, district, state FROM locations WHERE pincode = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("i", $pincode);
-        $stmt->execute();
-        $result = $stmt->get_result();
+        $sql = "SELECT location1, district1, state1 FROM locations WHERE pincode = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$pincode]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
-        if ($result->num_rows > 0) {
-            $data = $result->fetch_assoc();
-            $city = $data['location'];
-            $state = $data['state'];
-            $dis = $data['district'];
+        if ($result) {
+            $city = $result['location1'];
+            $state = $result['state1'];
+            $dis = $result['district1'];
         }
     
-        $stmt->close();
-        $conn->close();
+        // Continue processing...
+
     
         echo '
         <script>
@@ -281,21 +278,21 @@
                             <div class="form-group row">
                                 <label for="district" class="col-sm-3 col-form-label">District</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="district" value="'.htmlspecialchars($dis).'" readonly>
+                                    <input type="text" class="form-control" name="district" value="'.$dis.'" readonly>
                                 </div>
                             </div>
                             
                             <div class="form-group row">
                                 <label for="city" class="col-sm-3 col-form-label">Location</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="city" value="'.htmlspecialchars($city).'" readonly>
+                                    <input type="text" class="form-control" name="city" value="'.$city.'" readonly>
                                 </div>
                             </div>
     
                             <div class="form-group row">
                                 <label for="state" class="col-sm-3 col-form-label">State</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="state" value="'.htmlspecialchars($state).'" readonly>
+                                    <input type="text" class="form-control" name="state" value="'.$state.'" readonly>
                                 </div>
                             </div>
     

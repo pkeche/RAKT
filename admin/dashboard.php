@@ -71,10 +71,10 @@
         }
 
         .dropdown-menu , .dropdown-menu a:hover {
-            background-color: #f8f88f; /* Change the color to match your navbar background */
+            background-color: #d9534f; /* Change the color to match your navbar background */
         }
         #animated-image {
-        height:25px;
+        height:40px;
         margin-top: 20px;
         animation: scaleAnimation 0.4s infinite alternate; /* Animation duration and behavior */
         transform-origin: center; /* Sets the scaling center to the image center */
@@ -93,56 +93,50 @@
     <!-- Bootstrap navigation bar with responsive button -->
     <div class="container" style="margin-bottom: 100px;">
     <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#d9534f;">
-    <a class="navbar-brand" href="../index.php" style="color: #777;font-size:22px;letter-spacing:2px;">RAKT</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="?stock=1">Stock</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?donors=1">Donors</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?patients=1">Patients</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?donations=1">Donations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?requests=1">Requests</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?donations_history=1">Donations History</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="?requests_history=1">Requests History</a>
-                </li>
-                <li>
-                    <?php
-                    echo 
-                    '
-                    <div class="dropdown">
-                        <a class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-left:0px;">
-                            '.$_SESSION['admin'].'
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li>
-                                <a class="dropdown-item" href="?profile=1">Profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="?logout=1">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                    ';
-                    ?>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <a class="navbar-brand" href="../index.php" style="color: #fff;font-size:22px;letter-spacing:2px;">RAKT</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav d-flex align-items-center">
+            <li class="nav-item">
+                <a class="nav-link" href="?stock=1" style="color: #fff">Stock</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?donors=1" style="color: #fff">Donors</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?patients=1" style="color: #fff">Patients</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?donations=1" style="color: #fff">Donations</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?requests=1" style="color: #fff">Requests</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?donations_history=1" style="color: #fff">Donations History</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="?requests_history=1" style="color: #fff">Requests History</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#fff;">
+                    <?php echo $_SESSION['admin']; ?>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item" href="?profile=1">Profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="?logout=1">Logout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
     </div>
     <?php
     

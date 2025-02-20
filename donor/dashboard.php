@@ -78,7 +78,7 @@
 
         .navbar-nav .nav-item a , .dropdown a {
             position: relative;
-            color: #fff
+            color: #fff;
             text-transform: uppercase;
             margin-right: 10px;
             text-decoration: none;
@@ -86,7 +86,8 @@
         }
 
         .dropdown-menu , .dropdown-menu a:hover {
-            background-color: #f8f88f; /* Change the color to match your navbar background */
+            background-color: #d9534f; /* Change the color to match your navbar background */
+            margin-right: 15px;
         }
 
         .navbar-nav  li a:hover , .dropdown a:hover {
@@ -98,39 +99,34 @@
     <!-- Bootstrap navigation bar with responsive button -->
     <div class="container" style="margin-bottom: 100px;">
     <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shading" style="background-color:#d9534f;">
-    <!-- <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#FF0000;"> -->
     <a class="navbar-brand" href="../index.php" style="color: #fff;font-size:22px;letter-spacing:2px;">RAKT</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="?home=1" style="color:#fff">Home</a>
-                </li>
-                <li>
-                    <?php
-                    echo 
-                    '
-                    <div class="dropdown">
-                        <a class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="padding-left:0px; color:#fff;">
-                            '.$_SESSION['donor'].'
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li>
-                                <a class="dropdown-item" href="?profile=1">Profile</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="?logout=1">Logout</a>
-                            </li>
-                        </ul>
-                    </div>
-                    ';
-                    ?>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav d-flex align-items-center">
+            <li class="nav-item">
+                <a class="nav-link" href="?home=1" style="color:#fff">Home</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color:#fff;">
+                    <?php echo $_SESSION['donor']; ?>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item" href="?profile=1">Profile</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="?logout=1">Logout</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
     </div>
 
     <?php

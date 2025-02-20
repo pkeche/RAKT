@@ -9,12 +9,14 @@ CREATE TABLE `admin` (
   `name` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `pwd` varchar(255) NOT NULL
+  `pwd` varchar(255) NOT NULL,
+  `pincode` bigint(6) NOT NULL
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-INSERT INTO `admin` (`id`, `name`, `username`, `email`, `pwd`) VALUES
-(007, 'Prathamesh', 'PK', 'PK@gmail.com', 'PK');
+INSERT INTO `admin` (`id`, `name`, `username`, `email`, `pwd`,`pincode`) VALUES
+(007, 'Prathamesh', 'PK', 'PK@gmail.com', 'PK', 444604);
 
 
 CREATE TABLE `blood` (
@@ -50,7 +52,7 @@ CREATE TABLE `donor` (
   `name` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `pincode` int(6) NOT NULL,
+  `pincode` bigint(6) NOT NULL,
   `pwd` varchar(255) NOT NULL,
   `blood` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -62,7 +64,7 @@ CREATE TABLE `patient` (
   `name` varchar(255) NOT NULL,
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `pincode` int(6) NOT NULL,
+  `pincode` bigint(6) NOT NULL,
   `pwd` varchar(255) NOT NULL,
   `blood` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -81,10 +83,10 @@ CREATE TABLE `request` (
 
 CREATE TABLE locations (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    state VARCHAR(255),
-    district VARCHAR(255),
-    location VARCHAR(255),
-    pincode int(6)
+    state1 VARCHAR(255),
+    district1 VARCHAR(255),
+    location1 VARCHAR(255),
+    pincode bigint(6)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 ALTER TABLE `admin`
@@ -137,11 +139,13 @@ ALTER TABLE `request`
   ADD CONSTRAINT `fk_request_patient` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
-LOAD DATA INFILE 'database\\pincodes.csv'
+LOAD DATA INFILE 'C:\\xampp\\htdocs\\RAKT\\database\\pincodes.csv'
 INTO TABLE locations
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
-(@State, @District, @Location, @Unnamed_3, @Pincode)
-SET state = @State, district = @District, location = @Location, pincode = NULLIF(@Pincode, '');
+(@State, @District, @Location, @Pincode)
+SET state1 = @State, district1 = @District, location1 = @Location, pincode = @Pincode;
+
+

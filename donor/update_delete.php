@@ -9,6 +9,7 @@
         $name = $_POST["name"];
         $email = $_POST["email"];
         $username = $_POST['username'];
+        $pincode = $_POST['pincode'];
 
         try 
         {
@@ -45,11 +46,12 @@
 
             if(isset($_POST['update']))
             {
-                $query = "UPDATE donor set username=:username,email=:email,name=:name where id=:id;";
+                $query = "UPDATE donor set username=:username,email=:email,pincode=:pincode,name=:name where id=:id;";
                 $stmt = $pdo->prepare($query);
                 $stmt->bindParam(":name", $name);
                 $stmt->bindParam(":email", $email);
                 $stmt->bindParam(":username", $username);
+                $stmt->bindParam(":pincode", $pincode);
                 $stmt->bindParam(":id", $donor_id);
                 $stmt->execute();
     
