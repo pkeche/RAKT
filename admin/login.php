@@ -98,7 +98,7 @@
             <a class="btn inactive" href="../donor/login.php">As Donor</a>
             <a class="btn active" href="../admin/login.php">As Admin</a>
         </div>
-        <!-- Patient Register Form -->
+        <!-- Admin Register Form -->
         <div style="display:block;">
             <?php login_template("Admin Login"); ?>
         </div>

@@ -32,7 +32,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Register</title>
+    <title>Patient Register</title>
     <!-- Include Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- fontawesome -->
@@ -46,31 +46,58 @@
             margin: 0;
             padding: 0;
         }
-
-        body {
-            background: linear-gradient(45deg, #b6ffb6, #66b2ff);
-        }
         .form-container {
-            background-color: white;
             border-radius: 10px;
             padding: 20px;
-            margin: 50px auto;
+            margin: 10px auto 50px;
             max-width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        .navbar-shading {
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); /* Add a subtle box shadow for a lighting effect */
+        .active {
+            background-color: #d9534f; /* Highlight color for the active button */
+            color:#fff;
+            border: 1px #d9534f;
+            margin: 5px;
+            font-size: 18px;
+        }
+        .active:hover {
+            background-color: #dc3545; /* Highlight color for the active button */
+            color:#fff;
+            border: 1px #dc3545;
+            margin: 5px;
+        }
+        .inactive {
+            border: 1px #1ac9bc solid;
+            margin: 5px;
+        }
+        .custom-text-center {
+            padding: 10px;
+            max-width: 400px;
+            margin: auto;
+        }
+        @media (min-width: 576px) {
+            .text-center {
+                display: flex;
+                justify-content: center;
+            }
+            .btn {
+                flex: 1;
+            }
         }
     </style>
 </head>
 <body style="background-color: #f5f5dc;">
-    <div class="container" style="margin-top:50px;">
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-shading" style="background-color:#d9534f;">
+    <div class="container" style="margin-top:80px;">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color:#d9534f;">
         <a class="navbar-brand" href="../index.php" style="color: #fff;font-size:22px;letter-spacing:2px;">RAKT</a>
     </nav>
         <?php 
             check_errors();
-            register_template("Admin Register");
         ?>
+        <!-- Patient Register Form -->
+        <div style="display:block;">
+            <?php register_template("Admin Register"); ?>
+        </div>
     </div>
     <!-- Include Bootstrap JS and jQuery CDN -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -78,3 +105,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+
+
+

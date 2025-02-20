@@ -4,101 +4,55 @@
     require_once("../includes/dbh.inc.php");
     require_once("../includes/session.inc.php");
 
-    if($_SERVER["REQUEST_METHOD"]==="POST")
+    if($_SERVER["REQUEST_METHOD"]==="POST"){
+        $inserted = set_default($pdo);
+        if ($inserted) {
+        echo "Default admin inserted successfully!";}
+        header("Location:login.php");
+    }
+    function set_default(PDO $pdo): bool
     {
-        $name = $_POST["name"];
-        $email = $_POST["email"];
-        $pwd = $_POST["pwd"];
-        $username = $_POST["username"];
-
         try {
-            //errors
-            $errors = [];
+            // Start transaction to ensure data consistency
+            $pdo->beginTransaction();
     
-            if(checkInput($name,$email,$pwd,$username))
-            {
-                $errors["check_input"] = "Fill all fields!";
-            }
-            if(username_exists($pdo,$username))
-            {
-                $errors["user_exists"] = "user already exists!";
-            }
-            if(email_exists($pdo,$email))
-            {
-                $errors["email_exists"] = "email already exists!";
-            }
-
-            if($errors)
-            {
-                $_SESSION["admin_error_register"] = $errors;
-                header("Location:register.php");
-                die();
-            }
-
-            insert_user($pdo,$name,$username,$pwd,$email);
-
-            $_SESSION["admin"]=$username;
-
-            header("Location:register.php?register=success");
-
-            $pdo = null;
-            $stmt = null;
-
-            die();
-
-
-        } 
-        catch (PDOException $e) 
-        {
-            //throw $th;
-            die("query failed: ". $e->getMessage());
+            // Delete all existing admins
+            $pdo->exec("DELETE FROM `admin`");
+    
+            // Load default admin values from external file
+            $adminData = require 'admin_defaults.php';
+    
+            // Prepare insert query
+            $query = "INSERT INTO `admin` (id, name, username, email, pwd, pincode) 
+                      VALUES (:id, :name, :username, :email, :pwd, :pincode)";
+            $stmt = $pdo->prepare($query);
+    
+            // Hash the password before storing it
+            $hashedPwd = password_hash($adminData['password'], PASSWORD_BCRYPT, ['cost' => 12]);
+    
+            // Bind values
+            $stmt->bindParam(":id", $adminData['id'], PDO::PARAM_INT);
+            $stmt->bindParam(":name", $adminData['name'], PDO::PARAM_STR);
+            $stmt->bindParam(":username", $adminData['username'], PDO::PARAM_STR);
+            $stmt->bindParam(":email", $adminData['email'], PDO::PARAM_STR);
+            $stmt->bindParam(":pwd", $hashedPwd, PDO::PARAM_STR);
+            $stmt->bindParam(":pincode", $adminData['pincode'], PDO::PARAM_INT);
+    
+            // Execute the insert query
+            $success = $stmt->execute();
+    
+            // Commit the transaction
+            $pdo->commit();
+    
+            return $success;
+        } catch (Exception $e) {
+            // Rollback on failure
+            $pdo->rollBack();
+            error_log("Error resetting admin table: " . $e->getMessage());
+            return false;
         }
-
     }
-    else 
-    {
-        header("Location:register.php");
-        die();
-    }
-    function checkInput(string $name, string $email, string $pwd, string $username)
-    {
-        return empty($name) || empty($email) || empty($pwd) || empty($username);
-    }
-    function username_exists(object $pdo,string $username)
-    {
-        $query = "SELECT username from admin where username=:username;";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":username", $username);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if($result) return true;
-        return false;
-    }
-    function email_exists(object $pdo,string $email)
-    {
-        $query = "SELECT email from admin where email=:email;";
-        $stmt = $pdo->prepare($query);
-        $stmt->bindParam(":email", $email);
-        $stmt->execute();
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if($result) return true;
-        return false;
-    }
-    function insert_user(object $pdo,string $name,string $username,string $pwd,string $email)
-    {
-        $query = "INSERT INTO admin(name,username,pwd,email) VALUES (:name,:username,:pwd,:email);";
-        $stmt = $pdo->prepare($query);
-        $options = [
-            "cost"=>10
-        ];
-        $hashedPwd = password_hash($pwd, PASSWORD_BCRYPT,$options);
-        $stmt->bindParam(":username", $username);
-        $stmt->bindParam(":pwd", $hashedPwd);
-        $stmt->bindParam(":email", $email);
-        $stmt->bindParam(":name", $name);
-        $stmt->execute();
-    }
+    
+    
     
 ?>

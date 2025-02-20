@@ -70,29 +70,122 @@
     <link rel="shortcut icon" href="../images/blood-drop.svg" type="image/x-icon">
     <!-- Apply custom styles for the form -->
     <style>
-        html, body {
-            min-height: 100%;
-            margin: 0;
-            padding: 0;
-        }
+/* General Layout */
+html, body {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #f5f5dc;
+}
 
-        .navbar-nav .nav-item a , .dropdown a {
-            position: relative;
-            color: #fff;
-            text-transform: uppercase;
-            margin-right: 10px;
-            text-decoration: none;
-            overflow: hidden;
-        }
+/* Navbar */
+.navbar {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
 
-        .dropdown-menu , .dropdown-menu a:hover {
-            background-color: #d9534f; /* Change the color to match your navbar background */
-            margin-right: 15px;
-        }
+.navbar-brand {
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: #fff !important;
+    transition: all 0.3s ease-in-out;
+}
 
-        .navbar-nav  li a:hover , .dropdown a:hover {
-            color: #1abc9c !important;
-        }
+.navbar-brand:hover {
+    transform: scale(1.1);
+    text-shadow: 0px 2px 6px rgba(255, 255, 255, 0.3);
+}
+
+.navbar-nav .nav-item a, .dropdown a {
+    position: relative;
+    color: #fff !important;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+    margin-right: 10px;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.navbar-nav .nav-item a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff !important;
+    transform: scale(1.05);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-nav li a:hover {
+    color: #1abc9c !important;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    background-color: #d9534f;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu a {
+    color: #fff !important;
+    transition: background 0.3s ease-in-out;
+}
+
+.dropdown-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Hero Section */
+.hero-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 110px 15px 18px;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.hero-section.fade-in-active {
+    animation: fadeIn 1.2s ease-in-out forwards;
+}
+
+.hero-section h1 {
+    font-size: 2.5rem;
+}
+
+.hero-section p {
+    font-size: 1.55rem;
+    margin-top: 15px;
+    color: #444;
+}
+
+/* Buttons */
+.btn, .hero-section .btn {
+    font-size: 1.2rem;
+    padding: 10px 30px;
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out;
+    background-color: #d9534f;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+}
+
+.btn:hover, .hero-section .btn:hover {
+    background-color: #c8322d;
+    color: white;
+    transform: scale(1.08);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+        
     </style>
 </head>
 <body style="background-color: #f5f5dc;">

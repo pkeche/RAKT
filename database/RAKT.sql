@@ -15,10 +15,6 @@ CREATE TABLE `admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
-INSERT INTO `admin` (`id`, `name`, `username`, `email`, `pwd`,`pincode`) VALUES
-(007, 'Prathamesh', 'PK', 'PK@gmail.com', 'PK', 444604);
-
-
 CREATE TABLE `blood` (
   `id` bigint(20) NOT NULL,
   `AP` bigint(20) DEFAULT NULL,

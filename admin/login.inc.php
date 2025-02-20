@@ -19,7 +19,7 @@
                 $errors["check_input"] = "Fill all fields!";
             }
 
-            if(username_exists($pdo,$username,$pwd))
+            if(!username_exists($pdo,$username,$pwd))
             {
                 $errors["incorrect"] = "Incorrect Login Info!";
             }
@@ -60,16 +60,20 @@
     }
     function username_exists(PDO $pdo, string $username, string $pwd): bool
     {
-        $query = "SELECT * FROM admin WHERE username = :username AND pwd = :pwd";
+        // Prepare and execute the query
+        $query = "SELECT pwd FROM admin WHERE username = :username LIMIT 1";
         $stmt = $pdo->prepare($query);
-        $stmt->bindValue(":username", $username, PDO::PARAM_STR);
-        $stmt->bindValue(":pwd", $pwd, PDO::PARAM_STR); // Fixed placeholder
+        $stmt->bindParam(":username", $username, PDO::PARAM_STR);
         $stmt->execute();
         
+        // Fetch user record
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        return $result == false;
+    
+        // Check if user exists and verify password
+        return $result && password_verify($pwd, $result["pwd"]);
     }
+    
+    
     
     
 ?>
