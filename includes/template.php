@@ -267,7 +267,7 @@
         $state = "";
     
         // Fetch city and state using pincode
-        $sql = "SELECT district1, state1 FROM locations WHERE pincode = ?";
+        $sql = "SELECT district1, state1 FROM info WHERE pincode = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$pincode]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -483,80 +483,106 @@
         }
     }
 
-    function donate_request_template(string $path, string $name, string $name1, string $name2, string $name3, array $array1) {
+    function donate_request_template(string $path, string $name, string $name1, string $name2, string $name3) {
         echo '
             <style>
-                .form-group .user-box {
-                    position: relative;
-                    margin: 30px 0px;
-                }
-                .form-group .user-box input {
-                    width: 100%;
-                    padding: 10px 0;
-                    font-size: 16px;
-                    color: #000;
-                    border: none;
-                    border-bottom: 1px solid #000;
-                    background: transparent;
-                    border-radius: 0;
-                    outline: none;
-                }
-                .form-group .user-box label {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    padding: 10px 0;
-                    font-size: 16px;
-                    color: #000;
-                    pointer-events: none;
-                    transition: .5s;
-                }
-                .form-group .user-box input:focus ~ label,
-                .form-group .user-box input:valid ~ label {
-                    top: -30px;
-                    left: 0;
-                    color: #000;
-                    font-size: 12px;
-                }
+                .form-group { display: flex; align-items: center; margin-bottom: 15px; }
+                .form-group label { width: 10ch; font-weight: normal; text-align: right; margin-right: 10px; } /* Fixed label width */
+                .form-group input, .form-group select { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px; height: 38px; }
+                .pincode-container { display: flex; gap: 8px; flex: 1; }
+                .pincode-container input { width: 50%; } /* Half input size */
+                .pincode-container button { width: 50%; background: #1abc9c; color: white; border: none; cursor: pointer; height: 38px; border-radius: 5px; }
+                .pincode-container button:hover { background: #16a085; }
             </style>
+    
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    document.getElementById("searchBtn").addEventListener("click", async function() {
+                        let pincode = document.getElementById("pincode").value.trim();
+                        if (pincode === "") {
+                            alert("Please enter a pincode.");
+                            return;
+                        }
+    
+                        try {
+                            let response = await fetch("../includes/fetch_hospitals.php?pincode=" + pincode);
+                            let hospitals = await response.json();
+    
+                            let dropdown = document.getElementById("hospitalDropdown");
+                            dropdown.innerHTML = "";
+    
+                            if (hospitals.length > 0) {
+                                hospitals.forEach(hospital => {
+                                    let option = document.createElement("option");
+                                    option.value = hospital;
+                                    option.textContent = hospital;
+                                    dropdown.appendChild(option);
+                                });
+                            } else {
+                                let option = document.createElement("option");
+                                option.value = "";
+                                option.textContent = "No hospitals found";
+                                dropdown.appendChild(option);
+                            }
+                        } catch (error) {
+                            console.error("Error fetching hospitals:", error);
+                            alert("Failed to fetch hospital data.");
+                        }
+                    });
+                });
+            </script>
+    
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 offset-md-4">
+                    <div class="col-md-6 offset-md-3">
                         <div class="form-container p-3" style="border: 2px solid #1abc9c; border-radius:10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
                             <h2 class="text-center">' . htmlspecialchars($name) . '</h2>
+                            <br></br>
                             <form action="' . htmlspecialchars($path) . '" method="post">
+                                
+                                <!-- Reason Input -->
                                 <div class="form-group">
                                     <label for="' . htmlspecialchars($name2) . '">' . htmlspecialchars($name1) . '</label>
-                                    <input type="text" id="' . htmlspecialchars($name2) . '" name="' . htmlspecialchars($name2) . '" class="form-control">
+                                    <input type="text" id="' . htmlspecialchars($name2) . '" name="' . htmlspecialchars($name2) . '" required>
                                 </div>
+    
+                                <!-- Pincode + Search Button -->
+                                <div class="form-group">
+                                    <label for="pincode">Pincode</label>
+                                    <div class="pincode-container">
+                                        <input type="number" id="pincode" name="pincode" placeholder="Enter Pincode">
+                                        <button type="button" id="searchBtn">Search</button>
+                                    </div>
+                                </div>
+    
+                                <!-- Units Input Field (Default: 1) -->
                                 <div class="form-group">
                                     <label for="units">Units</label>
-                                    <input type="number" id="units" name="unit" class="form-control">
+                                    <input type="number" id="units" name="unit" min="1" value="1" required>
                                 </div>
+    
+                                <!-- Nearest Hospital Dropdown -->
                                 <div class="form-group">
                                     <label>Nearest Hospital</label>
-                                    <select class="form-control" name="hospital1" required>';
-        
-        if (!empty($array1)) {
-            echo '<option value="' . htmlspecialchars($array1[0]) . '" selected>' . htmlspecialchars($array1[0]) . '</option>';
-            foreach (array_slice($array1, 1) as $hospital1) {
-                echo '<option value="' . htmlspecialchars($hospital1) . '">' . htmlspecialchars($hospital1) . '</option>';
-            }
-        } else {
-            echo '<option value="" selected disabled>Hospital data not available</option>';
-        }
-    
-        echo '              </select>
+                                    <select id="hospitalDropdown" name="hospital1" required>
+                                        <option value="" selected disabled>Select a hospital</option>
+                                    </select>
                                 </div>
+    
+                                <!-- Submit Button -->
                                 <div class="text-center">
                                     <button type="submit" class="btn" style="color:#fff; background-color:#0047ab;">' . htmlspecialchars($name3) . '</button>
                                 </div>
+    
                             </form>
                         </div>
                     </div>
                 </div>
             </div>';
     }
+    
+    
+
 
     function history_template(array $row,string $name1,string $name2, string $name3) 
     {
