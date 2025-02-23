@@ -2,6 +2,7 @@
 <?php
     require_once("../includes/session.inc.php");
     include("../includes/dbh.inc.php");
+
     function login_template(string $name)
     {
         echo
@@ -254,6 +255,7 @@
         ';}
     
     }
+
     function profile_template(array $row, string $role)
     {
         // Database connection
@@ -261,18 +263,16 @@
     
         // Get pincode from the row
         $pincode = $row['pincode'];
-        $city = "";
         $dis = "";
         $state = "";
     
         // Fetch city and state using pincode
-        $sql = "SELECT location1, district1, state1 FROM locations WHERE pincode = ?";
+        $sql = "SELECT district1, state1 FROM locations WHERE pincode = ?";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$pincode]);
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
         if ($result) {
-            $city = $result['location1'];
             $state = $result['state1'];
             $dis = $result['district1'];
         }
@@ -347,13 +347,6 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group row">
-                                    <label for="city" class="col-sm-3 col-form-label">Location</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="city" value="'.$city.'" readonly>
-                                    </div>
-                                </div>
-        
                                 <div class="form-group row">
                                     <label for="state" class="col-sm-3 col-form-label">State</label>
                                     <div class="col-sm-9">
@@ -454,13 +447,6 @@
                                         <input type="text" class="form-control" name="district" value="'.$dis.'" readonly>
                                     </div>
                                 </div>
-                                
-                                <div class="form-group row">
-                                    <label for="city" class="col-sm-3 col-form-label">Location</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="city" value="'.$city.'" readonly>
-                                    </div>
-                                </div>
         
                                 <div class="form-group row">
                                     <label for="state" class="col-sm-3 col-form-label">State</label>
@@ -496,38 +482,83 @@
             </div>';
         }
     }
-    
-    
 
-    function donate_request_template(string $path,string $name,string $name1,string $name2,string $name3)
-    {
-        echo 
-        '
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 offset-md-4">
-                    <div class="form-container p-3" style="border: 2px solid #d9534f;border-radius:10px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                    <h2 class="text-center">'.$name.'</h2>
-                    <form action='.$path.' method="post">
-                        <div class="form-group">
-                            <label for='.$name2.'>'.$name1.'</label>
-                            <input type="text" id='.$name2.' name='.$name2.' class="form-control">
+    function donate_request_template(string $path, string $name, string $name1, string $name2, string $name3, array $array1) {
+        echo '
+            <style>
+                .form-group .user-box {
+                    position: relative;
+                    margin: 30px 0px;
+                }
+                .form-group .user-box input {
+                    width: 100%;
+                    padding: 10px 0;
+                    font-size: 16px;
+                    color: #000;
+                    border: none;
+                    border-bottom: 1px solid #000;
+                    background: transparent;
+                    border-radius: 0;
+                    outline: none;
+                }
+                .form-group .user-box label {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    padding: 10px 0;
+                    font-size: 16px;
+                    color: #000;
+                    pointer-events: none;
+                    transition: .5s;
+                }
+                .form-group .user-box input:focus ~ label,
+                .form-group .user-box input:valid ~ label {
+                    top: -30px;
+                    left: 0;
+                    color: #000;
+                    font-size: 12px;
+                }
+            </style>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 offset-md-4">
+                        <div class="form-container p-3" style="border: 2px solid #1abc9c; border-radius:10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                            <h2 class="text-center">' . htmlspecialchars($name) . '</h2>
+                            <form action="' . htmlspecialchars($path) . '" method="post">
+                                <div class="form-group">
+                                    <label for="' . htmlspecialchars($name2) . '">' . htmlspecialchars($name1) . '</label>
+                                    <input type="text" id="' . htmlspecialchars($name2) . '" name="' . htmlspecialchars($name2) . '" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="units">Units</label>
+                                    <input type="number" id="units" name="unit" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Nearest Hospital</label>
+                                    <select class="form-control" name="hospital1" required>';
+        
+        if (!empty($array1)) {
+            echo '<option value="' . htmlspecialchars($array1[0]) . '" selected>' . htmlspecialchars($array1[0]) . '</option>';
+            foreach (array_slice($array1, 1) as $hospital1) {
+                echo '<option value="' . htmlspecialchars($hospital1) . '">' . htmlspecialchars($hospital1) . '</option>';
+            }
+        } else {
+            echo '<option value="" selected disabled>Hospital data not available</option>';
+        }
+    
+        echo '              </select>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn" style="color:#fff; background-color:#0047ab;">' . htmlspecialchars($name3) . '</button>
+                                </div>
+                            </form>
                         </div>
-                        <div class="form-group">
-                            <label for="units">Units</label>
-                            <input type="number" id="units" name="unit" class="form-control">
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn" style="color:#fff;background-color:#0047ab;">'.$name3.'</button>
-                        </div>
-                    </form>
                     </div>
                 </div>
-            </div>
-            </div>
-        ';
+            </div>';
     }
-    function history_template(array $row,string $name1,string $name2)
+
+    function history_template(array $row,string $name1,string $name2, string $name3) 
     {
         echo
         '
@@ -548,6 +579,7 @@
                 <div class="card-body transparent-bg">
                     <p class="card-text">'.$name1.' : ' . $row[$name2] . '</p>
                     <p class="card-text">Units : ' . $row['unit'] . '</p>
+                    <p class="card-text">Hospital : '. $row[$name3] . '</p>
                     <b><p class="card-text">' . $row['status'] . '</p></b>
                 </div>
             </div>

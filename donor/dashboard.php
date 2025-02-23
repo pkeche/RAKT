@@ -308,7 +308,24 @@ html, body {
 
             check_errors();
 
-            donate_request_template("donate.php","Donate Blood","Disease","disease","Donate");
+            $query = "SELECT pincode FROM donor WHERE username = :current_username";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":current_username", $_SESSION['donor']);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user) {
+            $pincode = $user['pincode'];
+            $query = "SELECT hospital1 FROM locations WHERE pincode = :pincode";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":pincode", $pincode);
+            $stmt->execute();
+            $array1 = $stmt->fetchAll(PDO::FETCH_COLUMN); // Fetch only hospital names
+            } else {
+            echo "User not found!";
+            }
+
+            donate_request_template("donate.php","Donate Blood","Disease","disease",name3: "Donate",array1: $array1);
 
         }
         else if ($getOne && $getOne==='donations_history')
@@ -344,7 +361,7 @@ html, body {
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                history_template($row,"Disease","disease");
+                history_template($row,"Disease",name2: "disease", name3:"hospital1");
 
                 $cnt++;
             }

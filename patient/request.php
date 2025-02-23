@@ -9,9 +9,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         $reason = $_POST["reason"];
         $unit = $_POST["unit"];
+        $hospital1 = $_POST["hospital1"];
         $errors = [];
 
-        if (empty($reason) || $unit == null) {
+        if (empty($reason) || $unit == null || $hospital1 == null) {
             $errors["request_empty"] = "Fill all fields!";
         }
         if ($unit && $unit <= 0) {
@@ -47,17 +48,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!$result) {
             throw new Exception("Patient not found.");
         }
-
         $patient_id = $result["id"];
 
         // Insert request into the database
-        $query = "INSERT INTO request(username, patient_id, reason, blood, unit) VALUES(:current_username, :id, :reason, :blood, :unit);";
+        $query = "INSERT INTO request(username, patient_id, reason, blood, unit,hospital1) VALUES(:current_username, :id, :reason, :blood, :unit,:hospital1);";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":current_username", $_SESSION["patient"]);
         $stmt->bindParam(":reason", $reason);
         $stmt->bindParam(":blood", $blood);
         $stmt->bindParam(":id", $patient_id);
         $stmt->bindParam(":unit", $unit);
+        $stmt->bindParam(":hospital1", $hospital1);
         $stmt->execute();
 
         // Automatically approve the request

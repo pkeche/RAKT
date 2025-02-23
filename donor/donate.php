@@ -32,9 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         $disease = $_POST["disease"];
         $unit = $_POST["unit"];
+        $hospital1 = $_POST["hospital1"];
         $errors = [];
 
-        if (empty($disease) || $unit == null) {
+        if (empty($disease) || $unit == null || $hospital1 == null) {
             $errors["donate_empty"] = "Fill all fields!";
         }
         if ($unit && $unit <= 0) {
@@ -75,13 +76,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $donor_id = $result["id"];
 
         // Insert donation into the database
-        $query = "INSERT INTO donate(username, donor_id, disease, blood, unit) VALUES(:current_username, :id, :disease, :blood, :unit);";
+        $query = "INSERT INTO donate(username, donor_id, disease, blood, unit,hospital1) VALUES(:current_username, :id, :disease, :blood, :unit, :hospital1);";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":current_username", $_SESSION["donor"]);
         $stmt->bindParam(":disease", $disease);
         $stmt->bindParam(":blood", $blood);
         $stmt->bindParam(":id", $donor_id);
         $stmt->bindParam(":unit", $unit);
+        $stmt->bindParam(":hospital1", $hospital1);
         $stmt->execute();
 
         // Automatically approve the donation

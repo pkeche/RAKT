@@ -283,6 +283,8 @@ html, body {
 
             check_profile_errors();
 
+            
+
             $query = "SELECT * from patient where username=:username;";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":username",$_SESSION["patient"]);
@@ -306,7 +308,24 @@ html, body {
 
             check_errors();
 
-            donate_request_template("request.php","Request Blood","Reason","reason","Request");
+            $query = "SELECT pincode FROM patient WHERE username = :current_username";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":current_username", $_SESSION['patient']);
+            $stmt->execute();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user) {
+            $pincode = $user['pincode'];
+            $query = "SELECT hospital1 FROM locations WHERE pincode = :pincode";
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":pincode", $pincode);
+            $stmt->execute();
+            $array1 = $stmt->fetchAll(PDO::FETCH_COLUMN); // Fetch only hospital names
+            } else {
+            echo "User not found!";
+            }
+
+            donate_request_template("request.php","Request Blood","Reason","reason","Request",array1: $array1);
 
         }
         else if ($getOne && $getOne==='requests_history')
@@ -343,7 +362,7 @@ html, body {
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                    history_template($row,"Reason","reason");
+                    history_template($row,"Reason","reason",name3:"hospital1");
 
                 $cnt++;
             }
