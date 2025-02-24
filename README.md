@@ -70,11 +70,9 @@ graph TD
         P -->|Login| PL[Patient Login]
         P[Patient] -->|Register| PR[Patient Register]
         PR --> PL
-        
         D -->|Login| DL[Donor Login]
         D[Donor] -->|Register| DR[Donor Register]
         DR --> DL
-        
         A[Admin] -->|Login| AL[Admin Login]
         A -->|Reset to Default Password| AR[Reset Password]
         AR --> AL
