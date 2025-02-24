@@ -61,58 +61,50 @@ To set up the RAKT application with XAMPP in your Linux environment, follow thes
 
 ```mermaid
 graph TD
-    A[RAKT]
+    subgraph R[RAKT]
+    end
 
-  subgraph Login/Register
-  A1[Patient Login]
-  A3[Admin Login]
-  A2[Donor Login]
-  A1 --> |New to RAKT|A4[Patient Register]
-  A3 --> |New to RAKT|A6[Admin Register]
-  A2 --> |New to RAKT|A5[Donor Register]
-  end
+    subgraph LOGIN  /  REGISTER
+        P -->|Login| PL[Patient Login]
+        P[Patient] -->|Register| PR[Patient Register] --> PL
+        
+        D -->|Login| DL[Donor Login]
+        D[Donor] -->|Register| DR[Donor Register] --> DL
+        
+        A[Admin] -->|Login| AL[Admin Login]
+        A -->|Reset to Default Password| AR[Reset Password] --> AL
+    end
 
-  subgraph Patient
-    A1 --> |Success| K[Patient Dashboard]
-    K --> L[View Profile]
-    L --> M[Update Profile]
-    L --> N[Delete Account]
-    K --> O[Request Blood]
-    K --> Q[Request History]
-    O --> |Submit Request| R[View Past Requests]
-    Q --> R
-  end
+    subgraph PATIENT
+    PD[Patient Dashboard] --> VWP[View Profile]
+    VWP --> UPP[Update Profile]
+    VWP --> DPP[Delete Profile]
+    PD --> RB[Request Blood] --> |Submit Request|VPPP[View Past Request]
+    PD --> RH[Request History] --> VPPP
+    end
 
-  subgraph Admin
-    A3 --> |Success| E[Admin Dashboard]
-    E --> H[All blood types unit levels]
-    E --> |Manage|I[Patient/Donor Accounts]
-    E --> G[Requests/Donations]
-    E --> HI[View Past Donations/Requests]
-    G --> |Manages requests/donations|AR[Approve/Reject according to the request/donation data]
-    H --> |Update blood units| UB[Update Blood]
-  end
+    subgraph ADMIN 
+    AD[Admin Dashboard] --> PDA[Patients Donor Accounts]
+    AD --> BS[Blood Stock] -->|Update Blood Units| US[Update Stock]
+    AD --> VPA[View Profile] --> UPA[Update Profile]
+    AD -->  VPR[View Past Requests/Donations]
 
-  subgraph Donor
-    A2 --> |Success| T[Donor Dashboard]
-    T --> U[View Profile]
-    U --> V[Update Profile]
-    U --> W[Delete Account]
-    T --> X[Donate Blood]
-    T --> Z[Donation History]
-    X --> |Submit Donation| AA[View Past Donations]
-    Z --> AA
-  end
+    end
 
+    subgraph DONOR
+    DD[Donor Dashboard] --> VPD[View Profile] --> UPD[Update Profile]
+    VPD --> DPD[Delete Profile]
+    DD --> DB[Donate Blood] --> |Submit Request|VPDD[View Past Donations]
+    DD --> DH[Donation History] --> VPDD
+    end
 
-  A --> A1
-  A --> A2
-  A --> A3
-  A4 --> K
-  A5 --> T
-  A6 --> E
-
-```
+    R --> P
+    R --> D
+    R --> A
+    PL --> PD
+    DL --> DD
+    AL --> AD
+    ```
 ## Features
 
 - User authentication and role-based authorization for patients, donors, and admins.
