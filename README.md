@@ -63,12 +63,13 @@ To set up the RAKT application with XAMPP in your Linux environment, follow thes
 
 ## Flowchart
 
-```mermaid
+mermaid
+```
 graph TD
     subgraph R[RAKT]
     end
 
-    subgraph LOGIN / REGISTER
+    subgraph LOGIN  /  REGISTER
         P -->|Login| PL[Patient Login]
         P[Patient] -->|Register| PR[Patient Register] --> PL
         
@@ -80,25 +81,26 @@ graph TD
     end
 
     subgraph PATIENT
-        PD[Patient Dashboard] --> VWP[View Profile]
-        VWP --> UPP[Update Profile]
-        VWP --> DPP[Delete Profile]
-        PD --> RB[Request Blood] --> |Submit Request|VPPP[View Past Request]
-        PD --> RH[Request History] --> VPPP
+    PD[Patient Dashboard] --> VWP[View Profile]
+    VWP --> UPP[Update Profile]
+    VWP --> DPP[Delete Profile]
+    PD --> RB[Request Blood] --> |Submit Request|VPPP[View Past Request]
+    PD --> RH[Request History] --> VPPP
     end
 
     subgraph ADMIN 
-        AD[Admin Dashboard] --> PDA[Patients Donor Accounts]
-        AD --> BS[Blood Stock] -->|Update Blood Units| US[Update Stock]
-        AD --> VPA[View Profile] --> UPA[Update Profile]
-        AD --> VPR[View Past Requests/Donations]
+    AD[Admin Dashboard] --> PDA[Patients Donor Accounts]
+    AD --> BS[Blood Stock] -->|Update Blood Units| US[Update Stock]
+    AD --> VPA[View Profile] --> UPA[Update Profile]
+    AD -->  VPR[View Past Requests/Donations]
+
     end
 
     subgraph DONOR
-        DD[Donor Dashboard] --> VPD[View Profile] --> UPD[Update Profile]
-        VPD --> DPD[Delete Profile]
-        DD --> DB[Donate Blood] --> |Submit Request|VPDD[View Past Donations]
-        DD --> DH[Donation History] --> VPDD
+    DD[Donor Dashboard] --> VPD[View Profile] --> UPD[Update Profile]
+    VPD --> DPD[Delete Profile]
+    DD --> DB[Donate Blood] --> |Submit Request|VPDD[View Past Donations]
+    DD --> DH[Donation History] --> VPDD
     end
 
     R --> P
