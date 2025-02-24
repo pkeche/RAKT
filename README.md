@@ -92,9 +92,9 @@ graph TD
     end
 
     subgraph DONOR
-    DD[Donor Dashboard] --> VPD[View Profile] --> UPD[Update Profile]
+    DD[Donor Dashboard] --> DB[Donate Blood] --> |Submit Request|VPDD[View Past Donations]
+    DD --> VPD[View Profile] --> UPD[Update Profile]
     VPD --> DPD[Delete Profile]
-    DD --> DB[Donate Blood] --> |Submit Request|VPDD[View Past Donations]
     DD --> DH[Donation History] --> VPDD
     end
 
