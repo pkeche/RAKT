@@ -73,14 +73,22 @@ CREATE TABLE `request` (
   `hospital1` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE locations (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    location1 VARCHAR(255),
-    hospital1 VARCHAR(255),
-    address1 VARCHAR(255),
-    state1 VARCHAR(255),
-    district1 VARCHAR(255),
-    pincode bigint(6)
+CREATE TABLE `locations` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `location1` VARCHAR(255),
+    `hospital1` VARCHAR(255),
+    `address1` VARCHAR(255),
+    `state1` VARCHAR(255),
+    `district1` VARCHAR(255),
+    `pincode` bigint(6)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `info` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `location1` VARCHAR(255),
+    `state1` VARCHAR(255),
+    `district1` VARCHAR(255),
+    `pincode` bigint(6)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 ALTER TABLE `admin`
@@ -139,3 +147,12 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (@Location,@Hospital,@Address,@State,@District,@Pincode)
 SET   location1 = @Location, hospital1 = @Hospital, address1= @Address, state1 = @State, district1 = @District, pincode = @Pincode;
+
+LOAD DATA INFILE 'C:\\xampp\\htdocs\\RAKT\\database\\pincodes.csv'
+INTO TABLE info
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(@Location,@State,@District,@Pincode)
+SET   location1 = @Location, state1 = @State, district1 = @District, pincode = @Pincode;

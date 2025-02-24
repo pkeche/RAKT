@@ -20,7 +20,7 @@
             $pdo->exec("DELETE FROM `admin`");
     
             // Load default admin values from external file
-            $adminData = require 'admin_defaults.php';
+            $adminData = require '../database/admin_defaults.php';
     
             // Prepare insert query
             $query = "INSERT INTO `admin` (id, name, username, email, pwd, pincode) 

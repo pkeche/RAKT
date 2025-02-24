@@ -1,0 +1,28 @@
+import pymysql
+import csv
+
+# Database connection settings
+DB_HOST = "your_host"
+DB_USER = "your_user"
+DB_PASSWORD = "your_password"
+DB_NAME = "your_database"
+TABLE_NAME = "info"
+CSV_FILE = "C:\\xampp\\htdocs\\RAKT\\database\\pincodes.csv"
+
+
+# Read CSV file and generate queries
+queries = []
+with open(CSV_FILE, newline='', encoding='utf-8') as csvfile:
+    reader = csv.reader(csvfile)
+    next(reader)  # Skip the header row
+    
+    for row in reader:
+        location, state, district, pincode = row
+        insert_query = f"""INSERT INTO info (location1, state1, district1, pincode) VALUES ('{location}', '{state}', '{district}', {pincode}),"""
+        queries.append(insert_query)
+
+# Save queries to a notepad file
+with open("insert_queries.txt", "w", encoding="utf-8") as file:
+    file.write("\n".join(queries))
+
+print("Queries saved to insert_queries.txt.")
