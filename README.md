@@ -59,6 +59,8 @@ To set up the RAKT application with XAMPP in your Linux environment, follow thes
 
 ## Flowchart
 
+## Flowchart
+
 ```mermaid
 graph TD
     subgraph R[RAKT]
@@ -88,7 +90,6 @@ graph TD
     AD --> BS[Blood Stock] -->|Update Blood Units| US[Update Stock]
     AD --> VPA[View Profile] --> UPA[Update Profile]
     AD -->  VPR[View Past Requests/Donations]
-
     end
 
     subgraph DONOR
