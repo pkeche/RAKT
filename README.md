@@ -59,12 +59,7 @@ To set up the RAKT application with XAMPP in your Linux environment, follow thes
 
 ## Flowchart
 
-## Flowchart
-
-## Flowchart
-
-mermaid
-```
+```mermaid
 graph TD
     subgraph R[RAKT]
     end
