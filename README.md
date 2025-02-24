@@ -68,35 +68,45 @@ graph TD
 
     subgraph LOGIN  /  REGISTER
         P -->|Login| PL[Patient Login]
-        P[Patient] -->|Register| PR[Patient Register] --> PL
+        P[Patient] -->|Register| PR[Patient Register]
+        PR --> PL
         
         D -->|Login| DL[Donor Login]
-        D[Donor] -->|Register| DR[Donor Register] --> DL
+        D[Donor] -->|Register| DR[Donor Register]
+        DR --> DL
         
         A[Admin] -->|Login| AL[Admin Login]
-        A -->|Reset to Default Password| AR[Reset Password] --> AL
+        A -->|Reset to Default Password| AR[Reset Password]
+        AR --> AL
     end
 
     subgraph PATIENT
     PD[Patient Dashboard] --> VWP[View Profile]
     VWP --> UPP[Update Profile]
     VWP --> DPP[Delete Profile]
-    PD --> RB[Request Blood] --> |Submit Request|VPPP[View Past Request]
-    PD --> RH[Request History] --> VPPP
+    PD --> RB[Request Blood]
+    RB --> |Submit Request|VPPP[View Past Request]
+    PD --> RH[Request History]
+    RH --> VPPP
     end
 
     subgraph ADMIN 
     AD[Admin Dashboard] --> PDA[Patients Donor Accounts]
-    AD --> BS[Blood Stock] -->|Update Blood Units| US[Update Stock]
-    AD --> VPA[View Profile] --> UPA[Update Profile]
+    AD --> BS[Blood Stock] 
+    BS -->|Update Blood Units| US[Update Stock]
+    AD --> VPA[View Profile]
+    VPA --> UPA[Update Profile]
     AD -->  VPR[View Past Requests/Donations]
     end
 
     subgraph DONOR
-    DD[Donor Dashboard] --> VPD[View Profile] --> UPD[Update Profile]
+    DD[Donor Dashboard] --> VPD[View Profile]
+    VPD --> UPD[Update Profile]
     VPD --> DPD[Delete Profile]
-    DD --> DB[Donate Blood] --> |Submit Request|VPDD[View Past Donations]
-    DD --> DH[Donation History] --> VPDD
+    DD --> DB[Donate Blood]
+    DB  --> |Submit Request|VPDD[View Past Donations]
+    DD --> DH[Donation History]
+    DH --> VPDD
     end
 
     R --> P
