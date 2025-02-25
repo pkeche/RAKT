@@ -70,7 +70,7 @@
                         echo
                         '<button class="btn" type="submit" style="color:#fff;background-color:#0047ab;border:none;">Login</button>
                     </form>';
-                    if($name !== "Admin Login") echo '<p class="mt-3">Dont have an account? <a href="register.php">Register here</a></p>';
+                    if($name == "Admin Login") echo '<p class="mt-3">Forgot login Details? <a href="register.php">Reset to Default</a></p>';
                     else echo '<p class="mt-3">Forget Password? <a href="register.php">Reset here</a></p>';
                 echo '</div>
             </div>
@@ -484,103 +484,103 @@
 }
 
     function donate_request_template(string $path, string $name, string $name1, string $name2, string $name3) {
-        echo '
-            <style>
-                .form-group { display: flex; align-items: center; margin-bottom: 15px; }
-                .form-group label { width: 10ch; font-weight: normal; text-align: right; margin-right: 10px; } /* Fixed label width */
-                .form-group input, .form-group select { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px; height: 38px; }
-                .pincode-container { display: flex; gap: 8px; flex: 1; }
-                .pincode-container input { width: 50%; } /* Half input size */
-                .pincode-container button { width: 50%; background: #1abc9c; color: white; border: none; cursor: pointer; height: 38px; border-radius: 5px; }
-                .pincode-container button:hover { background: #16a085; }
-            </style>
-    
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    document.getElementById("searchBtn").addEventListener("click", async function() {
-                        let pincode = document.getElementById("pincode").value.trim();
-                        if (pincode === "") {
-                            alert("Please enter a pincode.");
-                            return;
-                        }
-    
-                        try {
-                            let response = await fetch("../includes/fetch_hospitals.php?pincode=" + pincode);
-                            let hospitals = await response.json();
-    
-                            let dropdown = document.getElementById("hospitalDropdown");
-                            dropdown.innerHTML = "";
-    
-                            if (hospitals.length > 0) {
-                                hospitals.forEach(hospital => {
-                                    let option = document.createElement("option");
-                                    option.value = hospital;
-                                    option.textContent = hospital;
-                                    dropdown.appendChild(option);
-                                });
-                            } else {
+    echo '
+        <style>
+            .form-group { display: flex; align-items: center; margin-bottom: 15px; }
+            .form-group label { width: 10ch; font-weight: normal; text-align: right; margin-right: 10px; } /* Fixed label width */
+            .form-group input, .form-group select { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 5px; height: 38px; }
+            .pincode-container { display: flex; gap: 8px; flex: 1; }
+            .pincode-container input { width: 50%; } /* Half input size */
+            .pincode-container button { width: 50%; background: #1abc9c; color: white; border: none; cursor: pointer; height: 38px; border-radius: 5px; }
+            .pincode-container button:hover { background: #16a085; }
+        </style>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("searchBtn").addEventListener("click", async function() {
+                    let pincode = document.getElementById("pincode").value.trim();
+                    if (pincode === "") {
+                        alert("Please enter a pincode.");
+                        return;
+                    }
+
+                    try {
+                        let response = await fetch("../includes/fetch_hospitals.php?pincode=" + pincode);
+                        let hospitals = await response.json();
+
+                        let dropdown = document.getElementById("hospitalDropdown");
+                        dropdown.innerHTML = "";
+
+                        if (hospitals.length > 0) {
+                            hospitals.forEach(hospital => {
                                 let option = document.createElement("option");
-                                option.value = "";
-                                option.textContent = "No hospitals found";
+                                option.value = hospital;
+                                option.textContent = hospital;
                                 dropdown.appendChild(option);
-                            }
-                        } catch (error) {
-                            console.error("Error fetching hospitals:", error);
-                            alert("Failed to fetch hospital data.");
+                            });
+                        } else {
+                            let option = document.createElement("option");
+                            option.value = "";
+                            option.textContent = "No hospitals found";
+                            dropdown.appendChild(option);
                         }
-                    });
+                    } catch (error) {
+                        console.error("Error fetching hospitals:", error);
+                        alert("Failed to fetch hospital data.");
+                    }
                 });
-            </script>
-    
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 offset-md-3">
-                        <div class="form-container p-3" style="border: 2px solid #1abc9c; border-radius:10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
-                            <h2 class="text-center">' . htmlspecialchars($name) . '</h2>
-                            <br></br>
-                            <form action="' . htmlspecialchars($path) . '" method="post">
-                                
-                                <!-- Reason Input -->
-                                <div class="form-group">
-                                    <label for="' . htmlspecialchars($name2) . '">' . htmlspecialchars($name1) . '</label>
-                                    <input type="text" id="' . htmlspecialchars($name2) . '" name="' . htmlspecialchars($name2) . '" required>
+            });
+        </script>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="form-container p-3" style="border: 2px solid #1abc9c; border-radius:10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                        <h2 class="text-center">' . htmlspecialchars($name) . '</h2>
+                        <br></br>
+                        <form action="' . htmlspecialchars($path) . '" method="post">
+                            
+                            <!-- Reason Input -->
+                            <div class="form-group">
+                                <label for="' . htmlspecialchars($name2) . '">' . htmlspecialchars($name1) . '</label>
+                                <input type="text" id="' . htmlspecialchars($name2) . '" name="' . htmlspecialchars($name2) . '" required>
+                            </div>
+
+                            <!-- Pincode + Search Button -->
+                            <div class="form-group">
+                                <label for="pincode">Pincode</label>
+                                <div class="pincode-container">
+                                    <input type="number" id="pincode" name="pincode" placeholder="Enter Pincode" required>
+                                    <button type="button" id="searchBtn">Search</button>
                                 </div>
-    
-                                <!-- Pincode + Search Button -->
-                                <div class="form-group">
-                                    <label for="pincode">Pincode</label>
-                                    <div class="pincode-container">
-                                        <input type="number" id="pincode" name="pincode" placeholder="Enter Pincode">
-                                        <button type="button" id="searchBtn">Search</button>
-                                    </div>
-                                </div>
-    
-                                <!-- Units Input Field (Default: 1) -->
-                                <div class="form-group">
-                                    <label for="units">Units</label>
-                                    <input type="number" id="units" name="unit" min="1" value="1" required>
-                                </div>
-    
-                                <!-- Nearest Hospital Dropdown -->
-                                <div class="form-group">
-                                    <label>Nearest Hospital</label>
-                                    <select id="hospitalDropdown" name="hospital1" required>
-                                        <option value="" selected disabled>Select a hospital</option>
-                                    </select>
-                                </div>
-    
-                                <!-- Submit Button -->
-                                <div class="text-center">
-                                    <button type="submit" class="btn" style="color:#fff; background-color:#0047ab;">' . htmlspecialchars($name3) . '</button>
-                                </div>
-    
-                            </form>
-                        </div>
+                            </div>
+
+                            <!-- Units Input Field (Default: 1) -->
+                            <div class="form-group">
+                                <label for="units">Units</label>
+                                <input type="number" id="units" name="unit" min="1" value="1" required>
+                            </div>
+
+                            <!-- Nearest Hospital Dropdown -->
+                            <div class="form-group">
+                                <label>Nearest Hospital</label>
+                                <select id="hospitalDropdown" name="hospital1" required>
+                                    <option value="" selected disabled>Select a hospital</option>
+                                </select>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center">
+                                <button type="submit" class="btn" style="color:#fff; background-color:#0047ab;">' . htmlspecialchars($name3) . '</button>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
-            </div>';
-    }
-    
+            </div>
+        </div>';
+}
+
     function history_template(array $row,string $name1,string $name2, string $name3) 
     {
         echo

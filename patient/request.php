@@ -10,9 +10,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $reason = $_POST["reason"];
         $unit = $_POST["unit"];
         $hospital1 = $_POST["hospital1"];
+        $pincode = $_POST["pincode"]; // Retrieve the pincode from the form submission
         $errors = [];
 
-        if (empty($reason) || $unit == null || $hospital1 == null) {
+        if (empty($reason) || $unit == null || $hospital1 == null || $pincode == null) {
             $errors["request_empty"] = "Fill all fields!";
         }
         if ($unit && $unit <= 0) {
@@ -51,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $patient_id = $result["id"];
 
         // Insert request into the database
-        $query = "INSERT INTO request(username, patient_id, reason, blood, unit,hospital1) VALUES(:current_username, :id, :reason, :blood, :unit,:hospital1);";
+        $query = "INSERT INTO request(username, patient_id, reason, blood, unit, hospital1) VALUES(:current_username, :id, :reason, :blood, :unit, :hospital1);";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":current_username", $_SESSION["patient"]);
         $stmt->bindParam(":reason", $reason);
@@ -91,6 +92,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             throw new Exception("Blood stock not found.");
         }
 
+        // Get info of the patient
+        $query = "SELECT * FROM patient WHERE username=:current_username;";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":current_username", $_SESSION['patient']);
+        $stmt->execute();
+        $info = $stmt->fetch(PDO::FETCH_ASSOC);
+
         if ($blood_result[$blood_column] - $unit >= 0) {
             // Update blood stock
             $query = "UPDATE blood SET {$blood_column} = {$blood_column} - :unit WHERE id = :id;";
@@ -98,10 +106,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":id", $blood_id, PDO::PARAM_INT);
             $stmt->bindParam(":unit", $unit, PDO::PARAM_INT);
             $stmt->execute();
+            sendEmails([$info['email']], "Patient-Approved", $info, $hospital1, $reason,$blood);
         } else {
             $input_status = "rejected due to insufficient blood stock of " . $blood;
-            $emailList = getMailIds($patient_id, $pdo);
-            sendEmails($emailList,"Patient");
+            $emailList = getMailIds($patient_id, $pincode, $pdo);
+            sendEmails([$info['email']], "Patient-Rejected", $info, $hospital1, $reason,$blood);
+            sendEmails($emailList, "Patient-Donor", $info, $hospital1, $reason,$blood);
         }
 
         // Update request status
@@ -110,6 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":id", $request_id);
         $stmt->bindParam(":status", $input_status);
         $stmt->execute();
+        
+        sendEmails($emailList, "Patient", $info, $hospital1, $reason,$blood);
 
         header("Location:dashboard.php?requests_history=1");
 

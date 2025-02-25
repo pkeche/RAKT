@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!$blood_result) {
             throw new Exception("Blood stock not found.");
         }
-
+        
         // Update blood stock
         $query = "UPDATE blood SET {$blood_column} = {$blood_column} + :unit WHERE id = :id;";
         $stmt = $pdo->prepare($query);
@@ -130,8 +130,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":status", $input_status);
         $stmt->execute();
 
+        // Get info of the patient
+        $query = "SELECT * FROM donor WHERE username=:current_username;";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":current_username", $_SESSION['donor']);
+        $stmt->execute();
+        $info = $stmt->fetch(PDO::FETCH_ASSOC);
+
         // Send email to the donor
-        sendEmails([$email], "Donor");
+        sendEmails([$email], "Donor", info: $info, hospital1: $hospital1, reason: $disease,blood: $blood_result);
 
         header("Location:dashboard.php?donations_history=1");
 
