@@ -1,4 +1,3 @@
-
 <?php
     require_once("../includes/session.inc.php");
     include("../includes/dbh.inc.php");
@@ -257,231 +256,232 @@
     }
 
     function profile_template(array $row, string $role)
-    {
-        // Database connection
-        global $pdo; 
-    
-        // Get pincode from the row
-        $pincode = $row['pincode'];
-        $dis = "";
-        $state = "";
-    
-        // Fetch city and state using pincode
-        $sql = "SELECT district1, state1 FROM info WHERE pincode = ?";
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute([$pincode]);
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-        if ($result) {
-            $state = $result['state1'];
-            $dis = $result['district1'];
-        }
-    
-        // Continue processing...
+{
+    // Database connection
+    global $pdo; 
 
-    
-        if ($role !== 'Admin'){
-            echo '
-            <script>
-                function confirmDelete(event) {
-                    if (!confirm("Are you sure you want to delete this profile? This action cannot be undone.")) {
-                        event.preventDefault(); // Prevent form submission if canceled
-                    }
-                }
-                
-                // Show success alert if deletion was successful
-                window.onload = function() {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    if (urlParams.has("deleted")) {
-                        alert("Profile deleted successfully!");
-                    }
-                };
-            </script>
-        
-            <div class="container mb-5">
-                <div class="row">
-                    <div class="col-md-6 offset-md-3">
-                        <div class="form-container p-3" style="border: 2px solid #d9534f; border-radius: 10px;">
-                            <h2 class="text-center">Profile</h2>
-                            <form action="update_delete.php" method="post">
-            
-                                <div class="form-group row">
-                                    <label for="id" class="col-sm-3 col-form-label">Id</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="id" value="'.$row['id'].'" readonly>
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="role" class="col-sm-3 col-form-label">Role</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="role" value="'.$role.'" readonly>
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="name" class="col-sm-3 col-form-label">Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="name" value="'.$row['name'].'">
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="email" class="col-sm-3 col-form-label">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" class="form-control" name="email" value="'.$row['email'].'">
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="pincode" class="col-sm-3 col-form-label">Pincode</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="pincode" value="'.$row['pincode'].'" >
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="district" class="col-sm-3 col-form-label">District</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="district" value="'.$dis.'" readonly>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group row">
-                                    <label for="state" class="col-sm-3 col-form-label">State</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="state" value="'.$state.'" readonly>
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="username" class="col-sm-3 col-form-label">Username</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="username" value="'.$row['username'].'"readonly>
-                                    </div>
-                                </div>';
-            
-                                if (isset($row['blood'])) {
-                                    echo '<div class="form-group row">
-                                            <label for="bloodgroup" class="col-sm-3 col-form-label">Blood Group</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="blood" value="'.$row['blood'].'" readonly>
-                                            </div>
-                                        </div>';
-                                }
-        
-                                echo '<div class="text-center">
-                                    <button type="submit" name="update" class="btn" style="color:#fff;background-color:#107dac;">Update</button>
-                                    <button type="submit" name="delete" class="btn" style="color:#fff;background-color:#a91b0d;" onclick="confirmDelete(event)">Delete</button>
-                                </div>
-        
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>';
-        }
-        else{
-            echo '
-            <script>
-                function confirmDelete(event) {
-                    if (!confirm("Are you sure you want to delete this profile? This action cannot be undone.")) {
-                        event.preventDefault(); // Prevent form submission if canceled
-                    }
-                }
-                
-                // Show success alert if deletion was successful
-                window.onload = function() {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    if (urlParams.has("deleted")) {
-                        alert("Profile deleted successfully!");
-                    }
-                };
-            </script>
-        
-            <div class="container mb-5">
-                <div class="row">
-                    <div class="col-md-6 offset-md-3">
-                        <div class="form-container p-3" style="border: 2px solid #d9534f; border-radius: 10px;">
-                            <h2 class="text-center">Profile</h2>
-                            <form action="update_delete.php" method="post">
-            
-                                <div class="form-group row">
-                                    <label for="id" class="col-sm-3 col-form-label">Id</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="id" value="'.$row['id'].'" readonly>
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="role" class="col-sm-3 col-form-label">Role</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="role" value="'.$role.'" readonly>
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="name" class="col-sm-3 col-form-label">Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="name" value="'.$row['name'].'">
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="email" class="col-sm-3 col-form-label">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" class="form-control" name="email" value="'.$row['email'].'">
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="pincode" class="col-sm-3 col-form-label">Pincode</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="pincode" value="'.$row['pincode'].'" >
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="district" class="col-sm-3 col-form-label">District</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="district" value="'.$dis.'" readonly>
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="state" class="col-sm-3 col-form-label">State</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="state" value="'.$state.'" readonly>
-                                    </div>
-                                </div>
-        
-                                <div class="form-group row">
-                                    <label for="username" class="col-sm-3 col-form-label">Username</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" name="username" value="'.$row['username'].'"readonly>
-                                    </div>
-                                </div>';
-            
-                                if (isset($row['blood'])) {
-                                    echo '<div class="form-group row">
-                                            <label for="bloodgroup" class="col-sm-3 col-form-label">Blood Group</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control" name="blood" value="'.$row['blood'].'" readonly>
-                                            </div>
-                                        </div>';
-                                }
-        
-                                echo '<div class="text-center">
-                                    <button type="submit" name="update" class="btn" style="color:#fff;background-color:#107dac;">Update</button>
-                                </div>
-        
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>';
-        }
+    // Get pincode from the row
+    $pincode = $row['pincode'];
+    $dis = "";
+    $state = "";
+
+    // Fetch city and state using pincode
+    $sql = "SELECT district1, state1 FROM info WHERE pincode = ?";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([$pincode]);
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($result) {
+        $state = $result['state1'];
+        $dis = $result['district1'];
     }
+
+    // Continue processing...
+
+    if ($role !== 'Admin'){
+        echo '
+        <script>
+            function confirmDelete(event) {
+                if (!confirm("Are you sure you want to delete this profile? This action cannot be undone.")) {
+                    event.preventDefault(); // Prevent form submission if canceled
+                }
+            }
+            
+            // Show success alert if deletion was successful
+            window.onload = function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has("deleted")) {
+                    alert("Profile deleted successfully!");
+                }
+            };
+        </script>
+    
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="form-container p-3" style="border: 2px solid #d9534f; border-radius: 10px;">
+                        <h2 class="text-center">Profile</h2>
+                        <form action="update_delete.php" method="post">
+    
+                            <div class="form-group row">
+                                <label for="role" class="col-sm-3 col-form-label">Role</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="role" value="'.$role.'" readonly>
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-3 col-form-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="name" value="'.$row['name'].'">
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" name="email" value="'.$row['email'].'">
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="pincode" class="col-sm-3 col-form-label">Pincode</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="pincode" value="'.$row['pincode'].'" >
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="district" class="col-sm-3 col-form-label">District</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="district" value="'.$dis.'" readonly>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group row">
+                                <label for="state" class="col-sm-3 col-form-label">State</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="state" value="'.$state.'" readonly>
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="username" class="col-sm-3 col-form-label">Username</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="username" value="'.$row['username'].'"readonly>
+                                </div>
+                            </div>';
+
+                            if (isset($row['blood'])) {
+                                echo '<div class="form-group row">
+                                        <label for="bloodgroup" class="col-sm-3 col-form-label">Blood Group</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="blood" value="'.$row['blood'].'" readonly>
+                                        </div>
+                                    </div>';
+                            }
+
+                            echo '<div class="form-group row">
+                                <label for="password" class="col-sm-3 col-form-label">Password</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" name="password" placeholder="Enter new password" oninput="document.getElementById(\'password_updated\').value = this.value ? \'true\' : \'false\'">
+                                </div>
+                            </div>';
+
+                            echo '<div class="text-center">
+                                <button type="submit" name="update" class="btn" style="color:#fff;background-color:#107dac;">Update</button>
+                                <button type="submit" name="delete" class="btn" style="color:#fff;background-color:#a91b0d;" onclick="confirmDelete(event)">Delete</button>
+                            </div>
+    
+                            <input type="hidden" id="password_updated" name="password_updated" value="false">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>';
+    }
+    else{
+        echo '
+        <script>
+            function confirmDelete(event) {
+                if (!confirm("Are you sure you want to delete this profile? This action cannot be undone.")) {
+                    event.preventDefault(); // Prevent form submission if canceled
+                }
+            }
+            
+            // Show success alert if deletion was successful
+            window.onload = function() {
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.has("deleted")) {
+                    alert("Profile deleted successfully!");
+                }
+            };
+        </script>
+    
+        <div class="container mb-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <div class="form-container p-3" style="border: 2px solid #d9534f; border-radius: 10px;">
+                        <h2 class="text-center">Profile</h2>
+                        <form action="update_delete.php" method="post">
+
+                            <div class="form-group row">
+                                <label for="role" class="col-sm-3 col-form-label">Role</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="role" value="'.$role.'" readonly>
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="name" class="col-sm-3 col-form-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="name" value="'.$row['name'].'">
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="email" class="col-sm-3 col-form-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="email" class="form-control" name="email" value="'.$row['email'].'">
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="pincode" class="col-sm-3 col-form-label">Pincode</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="pincode" value="'.$row['pincode'].'" >
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="district" class="col-sm-3 col-form-label">District</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="district" value="'.$dis.'" readonly>
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="state" class="col-sm-3 col-form-label">State</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="state" value="'.$state.'" readonly>
+                                </div>
+                            </div>
+    
+                            <div class="form-group row">
+                                <label for="username" class="col-sm-3 col-form-label">Username</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="username" value="'.$row['username'].'"readonly>
+                                </div>
+                            </div>';
+
+                            if (isset($row['blood'])) {
+                                echo '<div class="form-group row">
+                                        <label for="bloodgroup" class="col-sm-3 col-form-label">Blood Group</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="blood" value="'.$row['blood'].'" readonly>
+                                        </div>
+                                    </div>';
+                            }
+
+                            echo '<div class="form-group row">
+                                <label for="password" class="col-sm-3 col-form-label">Password</label>
+                                <div class="col-sm-9">
+                                    <input type="password" class="form-control" name="password" placeholder="Enter new password" oninput="document.getElementById(\'password_updated\').value = this.value ? \'true\' : \'false\'">
+                                </div>
+                            </div>';
+
+                            echo '<div class="text-center">
+                                <button type="submit" name="update" class="btn" style="color:#fff;background-color:#107dac;">Update</button>
+                            </div>
+    
+                            <input type="hidden" id="password_updated" name="password_updated" value="false">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>';
+    }
+}
 
     function donate_request_template(string $path, string $name, string $name1, string $name2, string $name3) {
         echo '
@@ -581,9 +581,6 @@
             </div>';
     }
     
-    
-
-
     function history_template(array $row,string $name1,string $name2, string $name3) 
     {
         echo

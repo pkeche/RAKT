@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once("../includes/session.inc.php");
 require_once("../includes/dbh.inc.php");
 require_once("../includes/template.php");
-require_once("../services/notify/main.php");
+require_once("../email.php");
 
 if (isset($_SESSION["donor"]) && isset($_GET["donate"]) && $_GET["donate"] === "success") {
     header("Location:dashboard.php");

@@ -6,7 +6,8 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use Dotenv\Dotenv;
 
-$dotenv = Dotenv::createImmutable(__DIR__);
+// Load the .env file from the root directory
+$dotenv = Dotenv::createImmutable(__DIR__ );
 $dotenv->load();
 
 function getMailIds(string $patient_id, PDO $conn): array {
@@ -37,7 +38,7 @@ function getMailIds(string $patient_id, PDO $conn): array {
     return $emails;
 }
 
-function sendEmails(array $emails,string $role): void {
+function sendEmails(array $emails, string $role): void {
     foreach ($emails as $email) {
         $mail = new PHPMailer(true);
         try {
@@ -55,14 +56,16 @@ function sendEmails(array $emails,string $role): void {
             $mail->addAddress($email);
 
             // Email content
-            if ($role=="Patient"){
+            if ($role == "Patient") {
                 $mail->Subject = 'Urgent Blood Request';
                 $mail->Body    = 'A patient in your area needs a blood donation. Please contact the nearest blood bank.';
-                $mail->send();}
-            if ($role=="Donor"){
+                $mail->send();
+            }
+            if ($role == "Donor") {
                 $mail->Subject = 'Your Blood Donation Request';
                 $mail->Body    = 'Your Blood Donation Request has been accepted. Please contact the nearest blood bank.';
-                $mail->send();}
+                $mail->send();
+            }
             
         } catch (Exception $e) {
             error_log("Email could not be sent to $email. Error: " . $mail->ErrorInfo);

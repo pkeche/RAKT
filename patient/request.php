@@ -3,7 +3,7 @@
 declare(strict_types=1);
 require_once("../includes/session.inc.php");
 require("../includes/dbh.inc.php");
-require_once("../services/notify/main.php");
+require("../email.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
