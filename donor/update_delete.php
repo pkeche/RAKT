@@ -69,6 +69,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
 
             $_SESSION['donor'] = $username;
             header('Location:dashboard.php?profile=1');
+            die();
 
 
 
@@ -79,7 +80,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
             $stmt->bindParam(":id", $donor_id);
             $stmt->execute();
             header('Location: ../index.php?deleted=1');
-            exit();
+            die();
         }
 
         $pdo = null;

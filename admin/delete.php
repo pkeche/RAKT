@@ -18,6 +18,7 @@
                 $stmt->execute();
                 
                 header('Location:dashboard.php?patients=1');
+                die();
             }
             else if(isset($_POST['donor']))
             {
@@ -27,6 +28,7 @@
                 $stmt->execute();
                 
                 header('Location:dashboard.php?donors=1');
+                die();
             }
 
             $pdo = null;

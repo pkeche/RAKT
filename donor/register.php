@@ -6,6 +6,7 @@
     if(isset($_SESSION["donor"]) && isset($_GET["register"]) && $_GET["register"]==="success")
     {
         header("Location:dashboard.php");
+        die();
     }
     function check_errors()
     {

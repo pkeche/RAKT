@@ -41,10 +41,10 @@
 
             $_SESSION["patient"]=$username;
 
-            header("Location:register.php?register=success");
-
+            
             $pdo = null;
             $stmt = null;
+            header("Location:register.php?register=success");
 
             die();
 

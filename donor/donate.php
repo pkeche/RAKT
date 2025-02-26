@@ -141,12 +141,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Send email to the donor
         sendEmails([$email], "Donor", $info, $hospital1, $disease, $blood);
 
-        header("Location:dashboard.php?donations_history=1");
-
         $pdo = null;
         $stmt = null;
-
-        exit();
+        header("Location:dashboard.php?donations_history=1");
+        die();
     } catch (PDOException $e) {
         echo $e->getMessage();
     } catch (Exception $e) {

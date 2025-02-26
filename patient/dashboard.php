@@ -12,6 +12,7 @@ if (!isset($_SESSION["patient"])) {
 if (!isset($_GET['home']) && !isset($_GET["profile"]) && !isset($_GET["request_blood"]) && !isset($_GET["requests_history"]) && !isset($_GET["logout"])) {
     // Redirect to the same page with the 'home' parameter added
     header('Location:dashboard.php?home=1');
+    die();
 }
 
 if (isset($_GET["logout"])) {

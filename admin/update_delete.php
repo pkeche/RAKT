@@ -69,6 +69,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
 
             $_SESSION['admin'] = $username;
             header('Location:dashboard.php?profile=1');
+            die();
 
 
         }

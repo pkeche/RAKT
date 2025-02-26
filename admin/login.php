@@ -7,6 +7,7 @@ require_once __DIR__ . '/../includes/template.php';
     if(isset($_SESSION["admin"]) && isset($_GET["login"]) && $_GET["login"]==="success")
     {
         header("Location:dashboard.php");
+        die();
     }
     function check_errors()
     {

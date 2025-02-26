@@ -48,10 +48,10 @@
             $stmt->bindParam(":status", $input_status);
             $stmt->execute();
     
-            header("Location:dashboard.php?donations_history=1");
-    
+            
             $pdo = null;
             $stmt = null;
+            header("Location:dashboard.php?donations_history=1");
             
             die();
         } 

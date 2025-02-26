@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($errors) {
             $_SESSION["patient_error_request"] = $errors;
             header("Location:dashboard.php?request_blood=1");
-            exit();
+            die();
         }
 
         // Get blood type of the patient
@@ -121,10 +121,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":status", $input_status);
         $stmt->execute();
 
-        header("Location:dashboard.php?requests_history=1");
-
+        
         $pdo = null;
         $stmt = null;
+        header("Location:dashboard.php?requests_history=1");
 
         exit();
     } catch (PDOException $e) {

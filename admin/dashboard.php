@@ -12,6 +12,7 @@
     if (!isset($_GET['profile']) && !isset($_GET['stock']) && !isset($_GET["donors"]) && !isset($_GET["patients"]) && !isset($_GET["donations"]) && !isset($_GET["requests"]) && !isset($_GET["donations_history"]) && !isset($_GET["requests_history"]) && !isset($_GET["logout"])) {
         // Redirect to the same page with the 'blood' parameter added
         header('Location:dashboard.php?stock=1');
+        die();
     }
 
     if (isset($_GET["logout"])) {

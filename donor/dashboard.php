@@ -12,6 +12,7 @@
     if (!isset($_GET['home']) && !isset($_GET["profile"]) && !isset($_GET["donate_blood"]) && !isset($_GET["donations_history"]) && !isset($_GET["logout"])) {
         // Redirect to the same page with the 'blood' parameter added
         header('Location:dashboard.php?home=1');
+        die();
     }
 
     if (isset($_GET["logout"])) {

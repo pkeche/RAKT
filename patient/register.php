@@ -6,6 +6,7 @@ require_once __DIR__ . '/../includes/template.php';
 if (isset($_SESSION["patient"]) && isset($_GET["register"]) && $_GET["register"] === "success") {
     header("Location:dashboard.php");
     die();
+    
 }
 
 function check_errors() {

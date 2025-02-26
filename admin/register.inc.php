@@ -10,6 +10,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
         echo "Default admin inserted successfully!";
     }
     header("Location:login.php");
+    die();
 }
 
 function set_default(PDO $pdo): bool

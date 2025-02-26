@@ -46,12 +46,12 @@
             $stmt->bindParam(":unit", $unit, PDO::PARAM_INT);
             $stmt->execute();
             
-            header("Location:dashboard.php?blood=1");
-
+            
             $pdo = null;
             $stmt = null;
-
+            
             unset($_SESSION['admin_error_update']);
+            header("Location:dashboard.php?blood=1");
 
             die();
             

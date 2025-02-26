@@ -33,10 +33,10 @@
 
              $_SESSION["admin"]=$username;
 
-             header("Location:login.php?login=success");
-
+             
              $pdo = null;
              $stmt = null;
+             header("Location:login.php?login=success");
 
              die();
 

@@ -32,10 +32,10 @@
 
             $_SESSION["patient"]=$username;
 
-            header("Location:login.php?login=success");
-
+            
             $pdo = null;
             $stmt = null;
+            header("Location:login.php?login=success");
 
             die();
 
