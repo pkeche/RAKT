@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ . '/../includes/dbh.inc.php';
-require_once __DIR__ . '/../vendor/autoload.php';
+include __DIR__ . '/includes/dbh.inc.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\SMTP;
 use Dotenv\Dotenv;
 
 // Load environment variables from .env file
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv = Dotenv::createImmutable(__DIR__ );
 $dotenv->load();
 
 function getMailIds(string $patient_id, string $pincode, PDO $conn): array {

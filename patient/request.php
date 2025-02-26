@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 require_once __DIR__ . '/../includes/session.inc.php';
-require_once __DIR__ . '/../includes/dbh.inc.php';
-require_once __DIR__ . '/../email.php';
+include __DIR__ . '/../includes/dbh.inc.php';
+require __DIR__ . '/../email.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {

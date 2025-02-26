@@ -71,7 +71,7 @@
                         '<button class="btn" type="submit" style="color:#fff;background-color:#0047ab;border:none;">Login</button>
                     </form>';
                     if($name == "Admin Login") echo '<p class="mt-3">Forgot login Details? <a href="register.php">Reset to Default</a></p>';
-                    else echo '<p class="mt-3">Forget Password? <a href="register.php">Reset here</a></p>';
+                    else echo '<p class="mt-3">New User? <a href="register.php">Register here</a></p>';
                 echo '</div>
             </div>
         </div>
