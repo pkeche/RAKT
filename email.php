@@ -86,7 +86,7 @@ function sendEmails(array $emails, string $role, array $info, string $hospital1,
             }
             else if ($role === "Patient-Aprroved") {
                 $mail->Subject = 'Your Blood Request';
-                $mail->Body    = "Your Blood Donation Request has been approved. Collect your blood from the hospital.
+                $mail->Body    = "Your Blood Donation Request has been approved. Collect your blood from the hospital front desk.
                 Get well soon.<br>
                                   <b>Patient Name:</b> {$info['name']}<br>
                                   <b>Hospital:</b> $hospital1<br>
