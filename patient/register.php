@@ -1,29 +1,29 @@
 <?php
-    
-    require_once("../includes/session.inc.php");
-    require_once("../includes/template.php");
-    if(isset($_SESSION["patient"]) && isset($_GET["register"]) && $_GET["register"]==="success")
-    {
-        header("Location:dashboard.php");
-    }
-    function check_errors()
-    {
-        if(isset($_SESSION["patient_error_register"]))
-        {
-            $errors = $_SESSION["patient_error_register"];
-            echo "<br>";
-            foreach ($errors as $error) {
-                echo '<div class="alert alert-danger alert-dismissible fade show text-center mx-auto" role="alert" style="width: fit-content;">';
-                echo $error;
-                echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close" style="background:none;">
-                <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                ';
-            }
-            unset($_SESSION["patient_error_register"]);
+
+require_once __DIR__ . '/../includes/session.inc.php';
+require_once __DIR__ . '/../includes/template.php';
+
+if (isset($_SESSION["patient"]) && isset($_GET["register"]) && $_GET["register"] === "success") {
+    header("Location:dashboard.php");
+    die();
+}
+
+function check_errors() {
+    if (isset($_SESSION["patient_error_register"])) {
+        $errors = $_SESSION["patient_error_register"];
+        echo "<br>";
+        foreach ($errors as $error) {
+            echo '<div class="alert alert-danger alert-dismissible fade show text-center mx-auto" role="alert" style="width: fit-content;">';
+            echo $error;
+            echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close" style="background:none;">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            ';
         }
+        unset($_SESSION["patient_error_register"]);
     }
+}
 ?>
 
 <!DOCTYPE html>

@@ -1,5 +1,5 @@
 <?php
-require '../includes/dbh.inc.php';
+require_once __DIR__ . '/../includes/dbh.inc.php';
 
 header("Content-Type: application/json");
 
@@ -11,7 +11,6 @@ if (isset($_GET['pincode'])) {
     $stmt->bindParam(":pincode", $pincode);
     $stmt->execute();
     $hospitals = $stmt->fetchAll(PDO::FETCH_COLUMN);
-    
 
     echo json_encode($hospitals);
     exit;

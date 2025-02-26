@@ -1,6 +1,6 @@
 <?php
-require '../includes/dbh.inc.php';
-require '../vendor/autoload.php';
+require_once __DIR__ . '/../includes/dbh.inc.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -8,7 +8,7 @@ use PHPMailer\PHPMailer\SMTP;
 use Dotenv\Dotenv;
 
 // Load environment variables from .env file
-$dotenv = Dotenv::createImmutable(__DIR__ );
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
 
 function getMailIds(string $patient_id, string $pincode, PDO $conn): array {
@@ -84,7 +84,7 @@ function sendEmails(array $emails, string $role, array $info, string $hospital1,
                                   <b>Reason:</b> $reason<br>
                                   <b>Blood Group:</b> $blood";
             }
-            else if ($role === "Patient-Aprroved") {
+            else if ($role === "Patient-Approved") {
                 $mail->Subject = 'Your Blood Request';
                 $mail->Body    = "Your Blood Donation Request has been approved. Collect your blood from the hospital front desk.
                 Get well soon.<br>

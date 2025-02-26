@@ -1,8 +1,9 @@
 <?php
     
-    require_once("../includes/session.inc.php");
-    require_once("../includes/dbh.inc.php");
-    require_once("../includes/template.php");
+    require_once __DIR__ . '/../includes/session.inc.php';
+    require_once __DIR__ . '/../includes/dbh.inc.php';
+    require_once __DIR__ . '/../includes/template.php';
+    
     if (!isset($_SESSION["donor"])) {
         header("Location: login.php");
         die();

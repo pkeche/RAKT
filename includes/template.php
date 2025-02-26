@@ -1,6 +1,6 @@
 <?php
-    require_once("../includes/session.inc.php");
-    include("../includes/dbh.inc.php");
+    require_once __DIR__ . '/../includes/session.inc.php';
+    include __DIR__ . '/../includes/dbh.inc.php';
 
     function login_template(string $name)
     {

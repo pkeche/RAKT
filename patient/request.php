@@ -1,9 +1,9 @@
 <?php
 
 declare(strict_types=1);
-require_once("../includes/session.inc.php");
-require("../includes/dbh.inc.php");
-require("../email.php");
+require_once __DIR__ . '/../includes/session.inc.php';
+require_once __DIR__ . '/../includes/dbh.inc.php';
+require_once __DIR__ . '/../email.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
@@ -106,12 +106,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt->bindParam(":id", $blood_id, PDO::PARAM_INT);
             $stmt->bindParam(":unit", $unit, PDO::PARAM_INT);
             $stmt->execute();
-            sendEmails([$info['email']], "Patient-Approved", $info, $hospital1, $reason,$blood);
+            sendEmails([$info['email']], "Patient-Approved", $info, $hospital1, $reason, $blood);
         } else {
             $input_status = "rejected due to insufficient blood stock of " . $blood;
             $emailList = getMailIds($patient_id, $pincode, $pdo);
-            sendEmails([$info['email']], "Patient-Rejected", $info, $hospital1, $reason,$blood);
-            sendEmails($emailList, "Patient-Donor", $info, $hospital1, $reason,$blood);
+            sendEmails([$info['email']], "Patient-Rejected", $info, $hospital1, $reason, $blood);
+            sendEmails($emailList, "Patient-Donor", $info, $hospital1, $reason, $blood);
         }
 
         // Update request status
@@ -120,8 +120,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":id", $request_id);
         $stmt->bindParam(":status", $input_status);
         $stmt->execute();
-        
-        sendEmails($emailList, "Patient", $info, $hospital1, $reason,$blood);
 
         header("Location:dashboard.php?requests_history=1");
 

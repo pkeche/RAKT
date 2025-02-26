@@ -1,8 +1,9 @@
 <?php
     
     
-    require_once("../includes/session.inc.php");
-    require_once("../includes/template.php");
+    require_once __DIR__ . '/../includes/session.inc.php';
+    require_once __DIR__ . '/../includes/template.php';
+    
     if(isset($_SESSION["admin"]) && isset($_GET["register"]) && $_GET["register"]==="success")
     {
         header("Location:dashboard.php");

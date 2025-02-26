@@ -1,13 +1,14 @@
 <?php
 
 declare(strict_types=1);
-require_once("../includes/session.inc.php");
-require_once("../includes/dbh.inc.php");
-require_once("../includes/template.php");
-require_once("../email.php");
+require_once __DIR__ . '/../includes/session.inc.php';
+require_once __DIR__ . '/../includes/dbh.inc.php';
+require_once __DIR__ . '/../includes/template.php';
+require_once __DIR__ . '/../email.php';
 
 if (isset($_SESSION["donor"]) && isset($_GET["donate"]) && $_GET["donate"] === "success") {
     header("Location:dashboard.php");
+    die();
 }
 
 function check_errors()
@@ -76,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $donor_id = $result["id"];
 
         // Insert donation into the database
-        $query = "INSERT INTO donate(username, donor_id, disease, blood, unit,hospital1) VALUES(:current_username, :id, :disease, :blood, :unit, :hospital1);";
+        $query = "INSERT INTO donate(username, donor_id, disease, blood, unit, hospital1) VALUES(:current_username, :id, :disease, :blood, :unit, :hospital1);";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":current_username", $_SESSION["donor"]);
         $stmt->bindParam(":disease", $disease);
@@ -130,7 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(":status", $input_status);
         $stmt->execute();
 
-        // Get info of the patient
+        // Get info of the donor
         $query = "SELECT * FROM donor WHERE username=:current_username;";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":current_username", $_SESSION['donor']);
@@ -138,7 +139,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $info = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Send email to the donor
-        sendEmails([$email], "Donor", info: $info, hospital1: $hospital1, reason: $disease,blood: $blood_result);
+        sendEmails([$email], "Donor", $info, $hospital1, $disease, $blood);
 
         header("Location:dashboard.php?donations_history=1");
 
