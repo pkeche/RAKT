@@ -51,7 +51,6 @@ if($_SERVER['REQUEST_METHOD']=="POST")
             if ($password_updated === "true") {
                 // Hash the password before storing it
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
                 $query = "UPDATE donor SET username=:username, email=:email, pincode=:pincode, name=:name, pwd=:password WHERE id=:id;";
                 $stmt = $pdo->prepare($query);
                 $stmt->bindParam(":password", $hashed_password);
@@ -70,9 +69,6 @@ if($_SERVER['REQUEST_METHOD']=="POST")
             $_SESSION['donor'] = $username;
             header('Location:dashboard.php?profile=1');
             die();
-
-
-
         }
         else if (isset($_POST['delete'])) {
             $query = "DELETE FROM donor WHERE id=:id;";

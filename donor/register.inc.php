@@ -46,7 +46,6 @@
             $pdo = null;
             $stmt = null;
             header("Location:register.php?register=success");
-
             die();
 
 
