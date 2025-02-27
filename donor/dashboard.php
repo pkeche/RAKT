@@ -312,7 +312,7 @@ html, body {
 
 
 
-            donate_request_template("donate.php","Donate Blood","Disease","disease",name3: "Donate");
+            donate_request_template("donate.php","Donate Blood","Disease","disease", "Donate");
 
         }
         else if ($getOne && $getOne==='donations_history')
@@ -348,7 +348,7 @@ html, body {
 
             while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                history_template($row,"Disease",name2: "disease", name3:"hospital1");
+                history_template($row,"Disease","disease", "hospital1");
 
                 $cnt++;
             }
