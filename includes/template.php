@@ -256,7 +256,7 @@
     }
 
     function profile_template(array $row, string $role)
-{
+    {
     // Database connection
     global $pdo; 
 

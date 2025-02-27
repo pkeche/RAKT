@@ -4,8 +4,7 @@ declare(strict_types= 1);
 require_once __DIR__ . '/../includes/session.inc.php';
 require_once __DIR__ . '/../includes/dbh.inc.php';
 
-if($_SERVER['REQUEST_METHOD']=="POST")
-{
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $username = $_POST['username'];
@@ -13,8 +12,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
     $password = $_POST['password'];
     $password_updated = $_POST['password_updated'];
 
-    try 
-    {
+    try {
         //code...
         $query = "SELECT id from donor where username=:current_username;";
         $stmt = $pdo->prepare($query);
@@ -22,32 +20,27 @@ if($_SERVER['REQUEST_METHOD']=="POST")
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $donor_id = $result["id"];
+        $donor_id = (int)$result["id"]; // Cast donor_id to integer
 
         $errors = [];
 
-        if(empty($username) || empty($email) || empty($name))
-        {
+        if (empty($username) || empty($email) || empty($name)) {
             $errors["donor_error_profile"] = "Fill all fields!";
         }
-        if(username_exists($pdo,$username,$donor_id))
-        {
+        if (username_exists($pdo, $username, $donor_id)) {
             $errors["user_exists"] = "user already exists!";
         }
-        if(email_exists($pdo,$email,$donor_id))
-        {
+        if (email_exists($pdo, $email, $donor_id)) {
             $errors["email_exists"] = "email already exists!";
         }
 
-        if($errors)
-        {
+        if ($errors) {
             $_SESSION["donor_error_profile"] = $errors;
             header("Location:dashboard.php?profile=1");
             die();
         }
 
-        if(isset($_POST['update']))
-        {
+        if (isset($_POST['update'])) {
             if ($password_updated === "true") {
                 // Hash the password before storing it
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -69,8 +62,7 @@ if($_SERVER['REQUEST_METHOD']=="POST")
             $_SESSION['donor'] = $username;
             header('Location:dashboard.php?profile=1');
             die();
-        }
-        else if (isset($_POST['delete'])) {
+        } else if (isset($_POST['delete'])) {
             $query = "DELETE FROM donor WHERE id=:id;";
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":id", $donor_id);
@@ -83,22 +75,16 @@ if($_SERVER['REQUEST_METHOD']=="POST")
         $stmt = null;
 
         die();
-
-    } 
-    catch (PDOException $e) 
-    {
+    } catch (PDOException $e) {
         //throw $th;
         echo $e->getMessage();
     }
-
-}
-else
-{
+} else {
     header("Location:dashboard.php");
     die();
 }
 
-function username_exists(object $pdo,string $username,int $id)
+function username_exists(object $pdo, string $username, int $id): bool
 {
     $query = "SELECT username from donor where username=:username and id!=:id;";
     $stmt = $pdo->prepare($query);
@@ -107,11 +93,10 @@ function username_exists(object $pdo,string $username,int $id)
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if($result) return true;
-    return false;
+    return (bool)$result;
 }
 
-function email_exists(object $pdo,string $email,int $id)
+function email_exists(object $pdo, string $email, int $id): bool
 {
     $query = "SELECT email from donor where email=:email and id!=:id;";
     $stmt = $pdo->prepare($query);
@@ -120,8 +105,7 @@ function email_exists(object $pdo,string $email,int $id)
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if($result) return true;
-    return false;
+    return (bool)$result;
 }
 
 ?>
